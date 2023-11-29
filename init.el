@@ -103,7 +103,7 @@
   :commands lsp)
 
 ;; https://oremacs.com/swiper/
-(add-to-list 'load-path "~/git/swiper/")
+(add-to-list 'load-path "~/.emacs.d/git/swiper/")
 (require 'ivy)
 (ivy-mode 1)
 
