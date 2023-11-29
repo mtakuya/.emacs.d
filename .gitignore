@@ -1,2 +1,9 @@
 /auto-save-list
 /eshell
+/elpa
+/git
+/places
+/saved-places
+/transient
+
+.lsp-session-*
