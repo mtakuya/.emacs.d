@@ -46,9 +46,14 @@
 (use-package go-mode
   :ensure t)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+(add-hook 'before-save-hook 'gofmt-before-save)
 
 (use-package go-eldoc
   :ensure t)
+
+(use-package flycheck
+  :ensure t)
+(add-hook 'go-mode-hook 'flycheck-mode)
 
 (use-package lsp-mode
   :ensure t
@@ -126,13 +131,32 @@
 (setq ivy-count-format "(%d/%d) ")
 (global-set-key "\C-s" 'swiper)
 
+;; https://github.com/doomemacs/themes
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+(doom-themes-org-config))
+
 ;; -------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(gopls use-package)))
+ '(package-selected-packages '(flycheck gopls use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
