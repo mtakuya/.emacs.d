@@ -22,7 +22,7 @@
 
 (set-face-background 'mode-line "gray10")
 (set-face-foreground 'mode-line "gray95")
-(set-face-background 'region "gray40")
+(set-face-background 'region "gray10")
 
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
@@ -97,6 +97,7 @@
 (set-face-attribute 'company-echo-common nil :foreground company-fg-color :background company-bg-color)
 
 ;; https://emacs-lsp.github.io/lsp-mode/page/installation/
+;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
 (use-package lsp-mode
   :ensure t
   :init
@@ -105,6 +106,15 @@
          (go-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+
+;; https://emacs-lsp.github.io/lsp-ui/
+(use-package lsp-ui
+  :ensure
+  :custom ((lsp-ui-doc-enable))
+  :hook ((lsp-mode-hook . lsp-ui-mode))
+   )
 
 ;; https://oremacs.com/swiper/
 (add-to-list 'load-path "~/.emacs.d/git/swiper/")
@@ -115,8 +125,6 @@
 (setq enable-recursive-minibuffers t)
 (setq ivy-count-format "(%d/%d) ")
 (global-set-key "\C-s" 'swiper)
-
-
 
 ;; -------------------------------------------------------------
 (custom-set-variables
