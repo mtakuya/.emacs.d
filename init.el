@@ -19,6 +19,7 @@
 (menu-bar-mode 0)
 (windmove-default-keybindings)
 (save-place-mode 1)
+(electric-pair-mode 1)
 
 (set-face-background 'mode-line "gray10")
 (set-face-foreground 'mode-line "gray95")
@@ -116,7 +117,7 @@
 
 ;; https://emacs-lsp.github.io/lsp-ui/
 (use-package lsp-ui
-  :ensure
+  :ensure t
   :custom ((lsp-ui-doc-enable))
   :hook ((lsp-mode-hook . lsp-ui-mode))
    )
@@ -149,6 +150,20 @@
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
 (doom-themes-org-config))
+
+(use-package dired-subtree
+  :ensure t
+  :demand
+  :bind
+  (:map dired-mode-map
+    ("<enter>" . mhj/dwim-toggle-or-open)
+    ("<return>" . mhj/dwim-toggle-or-open)
+    ("<tab>" . mhj/dwim-toggle-or-open))
+  :config
+  (progn
+    ;; Function to customize the line prefixes (I simply indent the lines a bit)
+    (setq dired-subtree-line-prefix (lambda (depth) (make-string (* 2 depth) ?\s)))
+    (setq dired-subtree-use-backgrounds nil)))
 
 ;; -------------------------------------------------------------
 (custom-set-variables
