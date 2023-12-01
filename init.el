@@ -2,10 +2,10 @@
 
 (require 'package)
 (setq package-archives
-      '(("gnu" . "http://elpa.gnu.org/packages/")
-        ("melpa" . "http://melpa.org/packages/")
+      '(("gnu" . "https://elpa.gnu.org/packages/")
+        ("melpa" . "https://melpa.org/packages/")
         ("MELPA Stable" . "https://stable.melpa.org/packages/")
-        ("org" . "http://orgmode.org/elpa/")))
+        ("org" . "https://orgmode.org/elpa/")))
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
