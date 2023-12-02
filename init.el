@@ -70,10 +70,6 @@
   :ensure t
   :commands (lsp lsp-deferred))
 
-(use-package lsp-ui
-  :ensure t
-  :commands lsp-ui-mode)
-
 (use-package smex
   :ensure t)
 (smex-initialize)
@@ -125,12 +121,25 @@
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
+(global-set-key (kbd "M-*") 'xref-pop-marker-stack)
+(global-set-key (kbd "M-.") 'xref-find-definitions)
+(global-set-key (kbd "M-/") 'xref-find-references)
+
 ;; https://emacs-lsp.github.io/lsp-ui/
 (use-package lsp-ui
   :ensure t
   :custom ((lsp-ui-doc-enable))
   :hook ((lsp-mode-hook . lsp-ui-mode))
-   )
+  :custom-face
+  (lsp-ui-doc-background ((t (:background "gray10")))))
+
+(global-set-key (kbd "C-c C-l") 'lsp-ui-doc-show)
+(setq lsp-ui-doc-enable t)
+(setq lsp-ui-doc-header t)
+(setq lsp-ui-doc-include-signature t)
+(setq lsp-ui-doc-max-width 100)
+(setq lsp-ui-doc-max-height 50)
+(setq lsp-ui-peek-enable t)
 
 ;; https://oremacs.com/swiper/
 (add-to-list 'load-path "~/.emacs.d/git/swiper/")
@@ -174,6 +183,19 @@
     ;; Function to customize the line prefixes (I simply indent the lines a bit)
     (setq dired-subtree-line-prefix (lambda (depth) (make-string (* 2 depth) ?\s)))
     (setq dired-subtree-use-backgrounds nil)))
+
+;;https://www.flycheck.org/en/latest/user/error-reports.html#fringe-and-margin-icons
+;; Show indicators in the left margin
+(setq flycheck-indication-mode 'left-margin)
+
+;; Adjust margins and fringe widths…
+(defun my/set-flycheck-margins ()
+  (setq left-fringe-width 8 right-fringe-width 8
+        left-margin-width 1 right-margin-width 0)
+  (flycheck-refresh-fringes-and-margins))
+
+;; …every time Flycheck is activated in a new buffer
+(add-hook 'flycheck-mode-hook #'my/set-flycheck-margins)
 
 ;; -------------------------------------------------------------
 (custom-set-variables
