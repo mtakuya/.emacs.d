@@ -151,6 +151,10 @@
 (setq ivy-count-format "(%d/%d) ")
 (global-set-key "\C-s" 'swiper)
 
+(use-package magit
+  :ensure t)
+(global-set-key (kbd "C-x g") 'magit-status)
+
 ;; https://github.com/doomemacs/themes
 (use-package doom-themes
   :ensure t
@@ -190,7 +194,7 @@
 
 ;; Adjust margins and fringe widths…
 (defun my/set-flycheck-margins ()
-  (setq left-fringe-width 8 right-fringe-width 8
+  (setq left-fringe-width 8 right-fringe-width 0
         left-margin-width 1 right-margin-width 0)
   (flycheck-refresh-fringes-and-margins))
 
