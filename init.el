@@ -216,6 +216,11 @@
 	      ("C-c p" . projectile-command-map)
               ("C-c C-p" . projectile-command-map)))
 
+(use-package popwin
+  :ensure t)
+(setq display-buffer-function 'popwin:display-buffer)
+(push '("*quickrun*") popwin:special-display-config)
+
 ;; -------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
