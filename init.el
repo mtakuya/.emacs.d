@@ -204,6 +204,9 @@
 ;; …every time Flycheck is activated in a new buffer
 (add-hook 'flycheck-mode-hook #'my/set-flycheck-margins)
 
+(use-package quickrun
+  :ensure t)
+(global-set-key (kbd "C-c C-c") 'quickrun)
 
 (use-package projectile
   :ensure t
