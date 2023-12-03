@@ -66,6 +66,9 @@
   :ensure t)
 (add-hook 'go-mode-hook 'flycheck-mode)
 
+(use-package go-playground
+  :ensure t)
+
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred))
