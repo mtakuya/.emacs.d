@@ -138,6 +138,7 @@
   (lsp-ui-doc-background ((t (:background "gray10")))))
 
 (global-set-key (kbd "C-c C-l") 'lsp-ui-doc-show)
+(setq lsp-lens-enable nil)
 (setq lsp-ui-doc-enable t)
 (setq lsp-ui-doc-header t)
 (setq lsp-ui-doc-include-signature t)
