@@ -5,6 +5,7 @@
 /places
 /saved-places
 /transient
+/recentf
 
 .lsp-session-*
 projectile-bookmarks.eld

@@ -47,8 +47,8 @@
 (use-package go-mode
   :ensure t)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+
 (add-hook 'before-save-hook 'gofmt-before-save)
-;;(setq gofmt-command "goimports")
 
 (use-package go-dlv
   :ensure t)
@@ -150,6 +150,7 @@
 (add-to-list 'load-path "~/.emacs.d/git/swiper/")
 (require 'ivy)
 (ivy-mode 1)
+(global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
 
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
@@ -222,6 +223,19 @@
   :ensure t)
 (setq display-buffer-function 'popwin:display-buffer)
 (push '("*quickrun*") popwin:special-display-config)
+
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-saved-items 30)
+(setq recentf-max-menu-items 30)
+
+(global-set-key (kbd "C-x C-r") 'recentf-ido-find-file)
+(defun recentf-ido-find-file ()
+  "Find a recent file using Ido."
+  (interactive)
+  (let ((file (ido-completing-read "Choose recent file: " recentf-list nil t)))
+    (when file
+      (find-file file))))
 
 ;; -------------------------------------------------------------
 (custom-set-variables
