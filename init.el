@@ -47,7 +47,12 @@
 (use-package go-mode
   :ensure t)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-(add-hook 'before-save-hook 'gofmt-before-save)
+
+(use-package go-dlv
+  :ensure t)
+
+;;(setq gofmt-command "goimports")
+;;(add-hook 'before-save-hook 'gofmt-before-save)
 
 (use-package direx
   :ensure t)
@@ -55,9 +60,6 @@
 (use-package go-direx
   :ensure t)
 (define-key go-mode-map (kbd "C-c C-d") 'go-direx-pop-to-buffer)
-
-;(setq gofmt-command "goimports")
-;(add-hook 'before-save-hook 'gofmt-before-save)
 
 (use-package go-eldoc
   :ensure t)
