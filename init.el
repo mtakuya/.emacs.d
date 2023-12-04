@@ -47,12 +47,11 @@
 (use-package go-mode
   :ensure t)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+(add-hook 'before-save-hook 'gofmt-before-save)
+;;(setq gofmt-command "goimports")
 
 (use-package go-dlv
   :ensure t)
-
-;;(setq gofmt-command "goimports")
-;;(add-hook 'before-save-hook 'gofmt-before-save)
 
 (use-package direx
   :ensure t)
