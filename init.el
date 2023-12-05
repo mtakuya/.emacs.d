@@ -1,3 +1,5 @@
+(setq package-user-dir "~/.emacs.d/elpa")
+
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -8,8 +10,6 @@
         ("melpa" . "https://melpa.org/packages/")
         ("MELPA Stable" . "https://stable.melpa.org/packages/")
         ("org" . "https://orgmode.org/elpa/")))
-
-(setq package-user-dir "~/.emacs.d/elisp")
 (package-initialize)
 
 (setq make-backup-files nil)
@@ -74,13 +74,6 @@
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred))
-
-(use-package smex
-  :ensure t)
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "C-x C-j") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
 (use-package company
   :ensure t)
@@ -148,7 +141,13 @@
 (setq lsp-ui-peek-enable t)
 
 ;; https://oremacs.com/swiper/
-(add-to-list 'load-path "~/.emacs.d/git/swiper/")
+;;(add-to-list 'load-path "~/.emacs.d/git/swiper/")
+(use-package ivy
+  :ensure t)
+
+(use-package swiper
+  :ensure t)
+
 (require 'ivy)
 (ivy-mode 1)
 (global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
@@ -156,7 +155,11 @@
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
 (setq ivy-count-format "(%d/%d) ")
-(global-set-key "\C-s" 'swiper)
+
+(global-set-key (kbd "C-s") 'swiper-isearch)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-j") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
 (use-package magit
   :ensure t)
