@@ -140,8 +140,6 @@
 (setq lsp-ui-doc-max-height 50)
 (setq lsp-ui-peek-enable t)
 
-;; https://oremacs.com/swiper/
-;;(add-to-list 'load-path "~/.emacs.d/git/swiper/")
 (use-package ivy
   :ensure t)
 
