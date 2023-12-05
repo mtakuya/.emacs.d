@@ -146,6 +146,9 @@
 (use-package swiper
   :ensure t)
 
+(use-package counsel
+  :ensure t)
+
 (require 'ivy)
 (ivy-mode 1)
 (global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
