@@ -1,3 +1,4 @@
+(package-initialize)
 (setq package-user-dir "~/.emacs.d/elpa")
 
 (unless (package-installed-p 'use-package)
@@ -10,7 +11,6 @@
         ("melpa" . "https://melpa.org/packages/")
         ("MELPA Stable" . "https://stable.melpa.org/packages/")
         ("org" . "https://orgmode.org/elpa/")))
-(package-initialize)
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
