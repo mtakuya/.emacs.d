@@ -1,5 +1,3 @@
-(package-initialize)
-
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -10,6 +8,9 @@
         ("melpa" . "https://melpa.org/packages/")
         ("MELPA Stable" . "https://stable.melpa.org/packages/")
         ("org" . "https://orgmode.org/elpa/")))
+
+(setq package-user-dir "~/.emacs.d/elisp")
+(package-initialize)
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
