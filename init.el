@@ -106,20 +106,13 @@
 (set-face-attribute 'company-echo nil :foreground company-fg-color :background company-bg-color)
 (set-face-attribute 'company-echo-common nil :foreground company-fg-color :background company-bg-color)
 
-(use-package which-key
-  :ensure t)
-(which-key-mode 1)
-(setq which-key-popup-type 'minibuffer)
-
 ;; https://emacs-lsp.github.io/lsp-mode/page/installation/
 ;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
 (use-package lsp-mode
   :ensure t
   :init
   (setq lsp-keymap-prefix "C-c l")
-  :hook (
-         (go-mode . lsp)
-         (lsp-mode . lsp-enable-which-key-integration))
+  :hook ((go-mode . lsp))
   :commands lsp)
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
