@@ -106,6 +106,11 @@
 (set-face-attribute 'company-echo nil :foreground company-fg-color :background company-bg-color)
 (set-face-attribute 'company-echo-common nil :foreground company-fg-color :background company-bg-color)
 
+(use-package which-key
+  :ensure t)
+(which-key-mode 1)
+(setq which-key-popup-type 'minibuffer)
+
 ;; https://emacs-lsp.github.io/lsp-mode/page/installation/
 ;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
 (use-package lsp-mode
@@ -162,10 +167,6 @@
 (global-set-key (kbd "C-x C-j") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
-(use-package magit
-  :ensure t)
-(global-set-key (kbd "C-x g") 'magit-status)
-
 ;; https://github.com/doomemacs/themes
 (use-package doom-themes
   :ensure t
@@ -174,16 +175,19 @@
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (load-theme 'doom-one t)
-
   ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
+  ;; (doom-themes-visual-bell-config)
   ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
+  ;; (doom-themes-neotree-config)
   ;; or for treemacs users
   (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
+  ;; (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
-(doom-themes-org-config))
+)
+
+(use-package magit
+  :ensure t)
+(global-set-key (kbd "C-x g") 'magit-status)
 
 (use-package dired-subtree
   :ensure t
