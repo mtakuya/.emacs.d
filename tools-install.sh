@@ -9,3 +9,4 @@ wget https://github.com/tkuchiki/alp/releases/download/v1.0.21/alp_linux_amd64.z
 unzip alp_linux_amd64.zip
 install ./alp /usr/local/bin
 rm alp_linux_amd64.zip
+rm alp
