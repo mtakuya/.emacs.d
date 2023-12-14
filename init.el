@@ -239,6 +239,14 @@
     (when file
       (find-file file))))
 
+(use-package yasnippet
+  :ensure t)
+(add-to-list 'load-path
+              "~/.emacs.d/snippets")
+(yas-global-mode 1)
+(global-set-key (kbd "C-c y") 'company-yasnippet)
+(global-set-key (kbd "C-c C-y") 'company-yasnippet)
+
 ;; -------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
