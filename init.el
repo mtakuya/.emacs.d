@@ -26,6 +26,10 @@
 (set-face-foreground 'mode-line "gray95")
 (set-face-background 'region "gray10")
 
+(global-hl-line-mode t)
+(custom-set-faces
+ '(hl-line ((t (:background "gray10")))))
+
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
 (add-to-list 'exec-path (expand-file-name "~/go/bin/"))
