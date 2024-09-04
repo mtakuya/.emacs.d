@@ -186,10 +186,6 @@
   ;; Corrects (and improves) org-mode's native fontification.
 )
 
-(use-package magit
-  :ensure t)
-(global-set-key (kbd "C-x g") 'magit-status)
-
 (use-package dired-subtree
   :ensure t
   :demand
