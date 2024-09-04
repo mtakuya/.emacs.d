@@ -12,6 +12,9 @@
         ("MELPA Stable" . "https://stable.melpa.org/packages/")
         ("org" . "https://orgmode.org/elpa/")))
 
+;(package-refresh-contents)
+;(byte-recompile-directory package-user-dir nil 'force)
+
 (setq make-backup-files nil)
 (setq create-lockfiles nil)
 (setq ring-bell-function 'ignore)
@@ -64,9 +67,13 @@
 (use-package direx
   :ensure t)
 
-(use-package go-direx
+(use-package dirvish
   :ensure t)
-(define-key go-mode-map (kbd "C-c C-d") 'go-direx-pop-to-buffer)
+(dirvish-override-dired-mode)
+
+;(use-package go-direx
+;  :ensure t)
+;(define-key go-mode-map (kbd "C-c C-d") 'go-direx-pop-to-buffer)
 
 (use-package go-eldoc
   :ensure t)
@@ -264,6 +271,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(flycheck gopls use-package)))
+ '(package-selected-packages '(dirvish flycheck gopls use-package)))
 
 ;; -------------------------------------------------------------
