@@ -12,8 +12,11 @@
         ("MELPA Stable" . "https://stable.melpa.org/packages/")
         ("org" . "https://orgmode.org/elpa/")))
 
-;(package-refresh-contents)
-;(byte-recompile-directory package-user-dir nil 'force)
+(defun recompile-elpa ()
+  "Recompile packages in elpa directory."
+  (interactive)
+  (package-refresh-contents)
+  (byte-recompile-directory package-user-dir nil 'force))
 
 (setq make-backup-files nil)
 (setq create-lockfiles nil)

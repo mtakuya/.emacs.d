@@ -6,6 +6,10 @@
 /saved-places
 /transient
 /recentf
+/bm-repository
+/emacs-visited-files
+/ido.last
+/smex-items
 
 .lsp-session-*
 projectile-bookmarks.eld
