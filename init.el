@@ -53,10 +53,16 @@
   (insert "_"))
 (global-set-key (kbd "C-c u") 'insert-underscore)
 
-(use-package git-gutter+
-  :ensure t)
-(global-git-gutter+-mode)
-(setq git-gutter:update-hooks '(after-save-hook after-revert-hook))
+(use-package diff-hl
+  :ensure t
+  :init
+  (global-diff-hl-mode)
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+  (unless (window-system) (diff-hl-margin-mode))
+  :custom-face
+  (diff-hl-change ((t (:background "gray10"))))
+  (diff-hl-delete ((t (:background "gray10"))))
+  (diff-hl-insert ((t (:background "gray10")))))
 
 (use-package go-mode
   :ensure t)
