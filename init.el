@@ -136,14 +136,28 @@
   :ensure t
   :init
   (setq lsp-keymap-prefix "C-c l")
-  :hook ((go-mode . lsp))
+  :hook ((go-mode rust-mode). lsp)
   :commands lsp)
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
+(use-package lsp-rust
+  :defer t
+  :custom
+  (lsp-rust-server 'rust-analyzer)
+  (lsp-rust-analyzer-cargo-watch-command "clippy")
+  (lsp-rust-analyzer-server-display-inlay-hints t)
+  (lsp-rust-analyzer-display-parameter-hints t)
+  (lsp-rust-analyzer-display-chaining-hints t))
+
 (global-set-key (kbd "M-*") 'xref-pop-marker-stack)
 (global-set-key (kbd "M-.") 'xref-find-definitions)
 (global-set-key (kbd "M-/") 'xref-find-references)
+
+(use-package rust-mode
+  :ensure t
+  :custom rust-format-on-save t)
+(add-hook 'rust-mode-hook #'lsp)
 
 ;; https://emacs-lsp.github.io/lsp-ui/
 (use-package lsp-ui

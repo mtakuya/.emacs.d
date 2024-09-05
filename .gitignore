@@ -10,6 +10,7 @@
 /emacs-visited-files
 /ido.last
 /smex-items
+/eln-cache
 
 .lsp-session-*
 projectile-bookmarks.eld
