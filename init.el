@@ -81,10 +81,6 @@
   :ensure t)
 (dirvish-override-dired-mode)
 
-;(use-package go-direx
-;  :ensure t)
-;(define-key go-mode-map (kbd "C-c C-d") 'go-direx-pop-to-buffer)
-
 (use-package go-eldoc
   :ensure t)
 
@@ -296,6 +292,9 @@
 (add-hook 'after-init-hook #'(lambda ()
                                (minions-mode)
                                (setq minions-mode-line-lighter "")))
+
+(use-package nasm-mode
+  :ensure t)
 
 ;; -------------------------------------------------------------
 (custom-set-variables
