@@ -13,5 +13,5 @@ CFLAGS='-I/usr/lib/gcc/x86_64-linux-gnu/12/include -L/usr/lib/gcc/x86_64-linux-g
 make -j$(nproc)
 sudo make install
 
-
-
+# Start Emacs and run M-x describe-variable RET system-configuration-features RET.
+# If Its value is contains NATIVE_COMP as shown in the following image, it is enabled.
