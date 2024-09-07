@@ -289,6 +289,14 @@
 (define-key company-active-map (kbd "\C-d") 'company-show-doc-buffer)
 (define-key company-active-map (kbd "M-.") 'company-show-location)
 
+(use-package minions
+  :ensure t
+  :config
+  (minions-mode 1))
+(add-hook 'after-init-hook #'(lambda ()
+                               (minions-mode)
+                               (setq minions-mode-line-lighter "")))
+
 ;; -------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
