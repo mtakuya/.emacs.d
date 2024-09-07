@@ -184,13 +184,11 @@
 
 (require 'ivy)
 (ivy-mode 1)
-(global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
 
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
 (setq ivy-count-format "(%d/%d) ")
 
-(global-set-key (kbd "C-s") 'swiper-isearch)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-j") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
@@ -262,14 +260,6 @@
 (setq recentf-max-saved-items 30)
 (setq recentf-max-menu-items 30)
 
-(global-set-key (kbd "C-x C-r") 'recentf-ido-find-file)
-(defun recentf-ido-find-file ()
-  "Find a recent file using Ido."
-  (interactive)
-  (let ((file (ido-completing-read "Choose recent file: " recentf-list nil t)))
-    (when file
-      (find-file file))))
-
 (use-package yasnippet
   :ensure t)
 (add-to-list 'load-path
@@ -295,6 +285,18 @@
 
 (use-package nasm-mode
   :ensure t)
+
+(use-package vertico
+  :ensure t)
+
+(require 'vertico)
+(vertico-mode 1)
+
+(use-package consult
+  :ensure t)
+(global-set-key (kbd "C-s") 'consult-line)
+(global-set-key (kbd "C-x C-b") 'consult-buffer)
+(global-set-key (kbd "C-x C-r") 'consult-recent-file)
 
 ;; -------------------------------------------------------------
 (custom-set-variables
