@@ -14,7 +14,7 @@ config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 -- Color scheme
 config.color_scheme = 'Andromeda'
 
--- Color 
+-- Color
 config.colors = {
   cursor_bg = '#FF69B4',
   cursor_fg = '#000000',
@@ -66,5 +66,33 @@ config.hyperlink_rules = wezterm.default_hyperlink_rules()
 
 -- Settings for adjusting window size when changing font size
 config.adjust_window_size_when_changing_font_size = false
+
+-- Windows
+if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
+  config.default_prog = { 'pwsh.exe' }
+  config.launch_menu = {
+    {
+      args = { 'top' },
+    },
+    {
+      label = 'WSL2',
+      args = {
+        'wsl.exe',
+        '--distribution',
+        'ubuntu',
+        '--cd',
+        '~'
+      },
+    },
+    {
+      label = 'x64 Native Tools VS 2022',
+      args = {
+        'cmd.exe',
+        '/k',
+        'C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Auxiliary/Build/vcvars64.bat'
+      },
+    },
+  }
+end
 
 return config
