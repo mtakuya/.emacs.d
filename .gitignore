@@ -11,6 +11,7 @@
 /ido.last
 /smex-items
 /eln-cache
+/emacs
 
 .lsp-session-*
 projectile-bookmarks.eld
