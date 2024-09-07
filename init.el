@@ -286,6 +286,9 @@
 (use-package nasm-mode
   :ensure t)
 
+(use-package masm-mode
+  :ensure t)
+
 (use-package vertico
   :ensure t)
 
