@@ -67,6 +67,15 @@ config.hyperlink_rules = wezterm.default_hyperlink_rules()
 -- Settings for adjusting window size when changing font size
 config.adjust_window_size_when_changing_font_size = false
 
+-- Linux
+if wezterm.target_triple:find("linux") then
+end
+
+-- macOS
+if wezterm.target_triple == 'x86_64-apple-darwin' or
+   wezterm.target_triple == 'aarch64-apple-darwin' then
+end
+
 -- Windows
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
   config.default_prog = { 'pwsh.exe' }
@@ -95,11 +104,43 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
       },
     },
     {
+      label = 'Windows Explorer',
+      args = {
+        'explorer.exe',
+      },
+    },
+    {
       label = 'x64 Native Tools VS 2022',
       args = {
         'cmd.exe',
         '/k',
         'C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Auxiliary/Build/vcvars64.bat'
+      },
+    },
+    {
+      label = 'Visual Studio 2022',
+      args = {
+        'C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/devenv.exe',
+      },
+    },
+    {
+      label = 'Google chrome',
+      args = {
+        'C:/Program Files/Google/Chrome/Application/chrome.exe',
+      },
+    },
+    {
+      label = 'Perplexity',
+      args = {
+        'C:/Program Files/Google/Chrome/Application/chrome.exe',
+        '--app=https://www.perplexity.ai/',
+      },
+    },
+    {
+      label = 'GitHub',
+      args = {
+        'C:/Program Files/Google/Chrome/Application/chrome.exe',
+        '--app=https://github.com/',
       },
     },
   }
