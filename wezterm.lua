@@ -75,13 +75,23 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
       args = { 'top' },
     },
     {
-      label = 'WSL2',
+      label = 'WSL',
       args = {
         'wsl.exe',
         '--distribution',
         'ubuntu',
         '--cd',
         '~'
+      },
+    },
+    {
+      label = 'WSL (C)',
+      args = {
+        'wsl.exe',
+        '--distribution',
+        'ubuntu',
+        '--cd',
+        '/mnt/c/Users'
       },
     },
     {
