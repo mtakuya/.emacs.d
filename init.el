@@ -301,13 +301,6 @@
 (global-set-key (kbd "C-x C-r") 'consult-recent-file)
 (global-set-key (kbd "C-x C-i") 'consult-imenu)
 
-(require 'eldoc)
-(use-package eldoc-box
-  :ensure t)
-(require 'eldoc-box)
-(add-hook 'eldoc-mode-hook
-          'eldoc-box-hover-mode)
-
 (use-package find-file-in-project
   :ensure t)
 
