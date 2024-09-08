@@ -311,6 +311,9 @@
 (use-package find-file-in-project
   :ensure t)
 
+(use-package neotree
+  :ensure t)
+
 ;; -------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
