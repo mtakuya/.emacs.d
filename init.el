@@ -313,6 +313,7 @@
 
 (use-package neotree
   :ensure t)
+(global-set-key (kbd "C-o") 'neotree)
 
 ;; -------------------------------------------------------------
 (custom-set-variables
