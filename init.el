@@ -1,4 +1,5 @@
 (package-initialize)
+
 (setq package-user-dir "~/.emacs.d/elpa")
 (setq max-lisp-eval-depth 10000)
 
@@ -193,6 +194,10 @@
 (global-set-key (kbd "C-x C-j") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
+;; Don't insert an initial ^ (caret) when calling counsel-M-x.
+(setq ivy-initial-inputs-alist
+      (assq-delete-all 'counsel-M-x ivy-initial-inputs-alist))
+
 ;; https://github.com/doomemacs/themes
 (use-package doom-themes
   :ensure t
@@ -257,8 +262,8 @@
 
 (require 'recentf)
 (recentf-mode 1)
-(setq recentf-max-saved-items 30)
-(setq recentf-max-menu-items 30)
+(setq recentf-max-saved-items 50)
+(setq recentf-max-menu-items 50)
 
 (use-package yasnippet
   :ensure t)
@@ -289,17 +294,22 @@
 (use-package masm-mode
   :ensure t)
 
-(use-package vertico
-  :ensure t)
-
-(require 'vertico)
-(vertico-mode 1)
-
 (use-package consult
   :ensure t)
 (global-set-key (kbd "C-s") 'consult-line)
 (global-set-key (kbd "C-x C-b") 'consult-buffer)
 (global-set-key (kbd "C-x C-r") 'consult-recent-file)
+(global-set-key (kbd "C-x C-i") 'consult-imenu)
+
+(require 'eldoc)
+(use-package eldoc-box
+  :ensure t)
+(require 'eldoc-box)
+(add-hook 'eldoc-mode-hook
+          'eldoc-box-hover-mode)
+
+(use-package find-file-in-project
+  :ensure t)
 
 ;; -------------------------------------------------------------
 (custom-set-variables
