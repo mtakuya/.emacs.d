@@ -310,6 +310,9 @@
 (use-package lua-mode
   :ensure t)
 
+(use-package magit
+  :ensure t)
+
 ;; -------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
