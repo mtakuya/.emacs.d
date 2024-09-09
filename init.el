@@ -31,7 +31,6 @@
 
 (set-face-background 'mode-line "gray10")
 (set-face-foreground 'mode-line "gray95")
-(set-face-background 'region "gray10")
 
 (global-hl-line-mode t)
 (custom-set-faces
