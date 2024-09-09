@@ -308,6 +308,9 @@
   :ensure t)
 (global-set-key (kbd "C-o") 'neotree)
 
+(use-package lua-mode
+  :ensure t)
+
 ;; -------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
