@@ -1,3 +1,5 @@
+#!/usr/bin/bash
+
 sudo apt update
 sudo apt install -y build-essential libgtk-3-dev libgnutls28-dev libtiff5-dev libgif-dev libjpeg-dev libpng-dev libxpm-dev libncurses-dev texinfo autoconf libgccjit-12-dev gnutls-bin
 
