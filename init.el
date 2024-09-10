@@ -182,6 +182,9 @@
 (use-package counsel
   :ensure t)
 
+(use-package counsel-at-point
+  :ensure t)
+
 (require 'ivy)
 (ivy-mode 1)
 
@@ -192,6 +195,10 @@
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-j") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "C-c g") 'counsel-git-grep)
+(global-set-key (kbd "C-c C-g") 'counsel-at-point-git-grep)
+(global-set-key (kbd "C-c i") 'counsel-imenu)
+(global-set-key (kbd "C-c C-i") 'counsel-at-point-imenu)
 
 ;; Don't insert an initial ^ (caret) when calling counsel-M-x.
 (setq ivy-initial-inputs-alist
@@ -298,7 +305,6 @@
 (global-set-key (kbd "C-s") 'consult-line)
 (global-set-key (kbd "C-x C-b") 'consult-buffer)
 (global-set-key (kbd "C-x C-r") 'consult-recent-file)
-(global-set-key (kbd "C-x C-i") 'consult-imenu)
 
 (use-package find-file-in-project
   :ensure t)
