@@ -319,6 +319,17 @@
 (use-package magit
   :ensure t)
 
+(use-package which-key
+  :ensure t
+  :init
+  (setq which-key-separator " ")
+  (setq which-key-prefix-prefix "+")
+  :config
+  (which-key-mode)
+  (setq which-key-idle-delay 1)
+  (setq which-key-max-description-length 40)
+  (setq which-key-max-display-columns nil))
+
 ;; -------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
