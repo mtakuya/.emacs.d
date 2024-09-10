@@ -68,7 +68,6 @@ end
 if wezterm.target_triple == 'x86_64-apple-darwin' or
    wezterm.target_triple == 'aarch64-apple-darwin' then
    config.font_size = 15
-   
    -- Window frame
    config.window_frame = {
       font = require('wezterm').font 'JetBrains Mono',
