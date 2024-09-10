@@ -34,12 +34,6 @@ config.colors = {
 -- Cursor style
 config.default_cursor_style = 'SteadyBlock'
 
--- Window frame
-config.window_frame = {
-   font = require('wezterm').font 'JetBrains Mono',
-   font_size = 15.0,
-}
-
 -- Hiding the tab bar（if there is only one tab)
 config.hide_tab_bar_if_only_one_tab = true
 
@@ -74,6 +68,13 @@ end
 if wezterm.target_triple == 'x86_64-apple-darwin' or
    wezterm.target_triple == 'aarch64-apple-darwin' then
    config.font_size = 15
+   
+   -- Window frame
+   config.window_frame = {
+      font = require('wezterm').font 'JetBrains Mono',
+      font_size = 15.0,
+   }
+   
    config.default_prog = { '/bin/zsh','-l' }
    config.launch_menu = {
       {
@@ -104,7 +105,13 @@ end
 
 -- Windows
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
-   config.font_size = 14
+   config.font_size = 12
+   -- Window frame
+   config.window_frame = {
+      font = require('wezterm').font 'JetBrains Mono',
+      font_size = 12.0,
+   }
+   
    config.default_prog = { 'pwsh.exe' }
    config.launch_menu = {
       {
