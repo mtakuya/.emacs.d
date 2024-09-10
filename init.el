@@ -330,6 +330,20 @@
   (setq which-key-max-description-length 40)
   (setq which-key-max-display-columns nil))
 
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-icon nil)
+  (setq doom-modeline-workspace-name t)
+  (setq doom-modeline-lsp t)
+  (setq doom-modeline-env-enable-ruby t)
+  (setq doom-modeline-env-enable-go t)
+  (setq doom-modeline-env-enable-rust t)
+  (setq doom-modeline-project-detection 'project))
+
+(setq find-file-visit-truename t)
+
 ;; -------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
