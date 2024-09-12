@@ -11,7 +11,7 @@
 (setq package-archives
       '(("gnu" . "https://elpa.gnu.org/packages/")
         ("melpa" . "https://melpa.org/packages/")
-        ("MELPA Stable" . "https://stable.melpa.org/packages/")
+        ("melpa stable" . "https://stable.melpa.org/packages/")
         ("org" . "https://orgmode.org/elpa/")))
 
 (defun recompile-elpa ()
@@ -23,11 +23,13 @@
 (setq make-backup-files nil)
 (setq create-lockfiles nil)
 (setq ring-bell-function 'ignore)
+(setq confirm-kill-emacs 'y-or-n-p)
 
 (menu-bar-mode 0)
 (windmove-default-keybindings)
 (save-place-mode 1)
 (electric-pair-mode 1)
+(which-function-mode 1)
 
 (set-face-background 'mode-line "gray10")
 (set-face-foreground 'mode-line "gray95")
@@ -341,6 +343,7 @@
   (setq doom-modeline-env-enable-ruby t)
   (setq doom-modeline-env-enable-go t)
   (setq doom-modeline-env-enable-rust t)
+  (setq doom-modeline-buffer-file-name-style 'file-name)
   (setq doom-modeline-project-detection 'project))
 
 ;; Symbolic link settings
@@ -371,12 +374,6 @@
   :ensure t 
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
-
-(use-package orderless
-  :ensure t
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
 
 ;; -------------------------------------------------------------
 (custom-set-variables
