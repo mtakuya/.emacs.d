@@ -12,6 +12,7 @@
 /smex-items
 /eln-cache
 /emacs
+/tree-sitter
 
 .lsp-session-*
 projectile-bookmarks.eld
