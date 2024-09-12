@@ -30,6 +30,7 @@
 (save-place-mode 1)
 (electric-pair-mode 1)
 (which-function-mode 1)
+(show-paren-mode t)
 
 (set-face-background 'mode-line "gray10")
 (set-face-foreground 'mode-line "gray95")
@@ -46,16 +47,6 @@
 
 (add-to-list 'exec-path (expand-file-name "~/go/bin/"))
 
-(defun insert-and ()
-  (interactive)
-  (insert "&"))
-(global-set-key (kbd "C-c ;") 'insert-and)
-
-(defun insert-underscore ()
-  (interactive)
-  (insert "_"))
-(global-set-key (kbd "C-c u") 'insert-underscore)
-
 (use-package diff-hl
   :ensure t
   :init
@@ -70,7 +61,6 @@
 (use-package go-mode
   :ensure t)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-
 (add-hook 'before-save-hook 'gofmt-before-save)
 
 (use-package go-dlv
@@ -190,6 +180,21 @@
 (require 'ivy)
 (ivy-mode 1)
 
+;; To configure the colors for counsel-find-file, use ivy-face
+(setq ivy-bg-color "gray10")
+(setq ivy-fg-color "#AAAAAA")
+(setq ivy-selection-color "white")
+(set-face-attribute 'ivy-current-match nil
+                    :background ivy-bg-color
+                    :foreground ivy-fg-color
+		    :underline t
+                    :weight 'bold)
+
+(set-face-attribute 'ivy-minibuffer-match-face-1 nil
+                    :background nil
+                    :foreground ivy-fg-color
+                    :weight 'bold)
+
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
 (setq ivy-count-format "(%d/%d) ")
@@ -210,19 +215,10 @@
 (use-package doom-themes
   :ensure t
   :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (setq doom-themes-enable-bold t    
+        doom-themes-enable-italic t) 
   (load-theme 'doom-one t)
-  ;; Enable flashing mode-line on errors
-  ;; (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  ;; (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  ;; (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-)
+  (setq doom-themes-treemacs-theme "doom-atom"))
 
 (use-package dired-subtree
   :ensure t
@@ -280,9 +276,6 @@
 (yas-global-mode 1)
 (global-set-key (kbd "C-c y") 'company-yasnippet)
 (global-set-key (kbd "C-c C-y") 'company-yasnippet)
-
-(show-paren-mode t)
-
 (define-key company-active-map (kbd "\C-n") 'company-select-next)
 (define-key company-active-map (kbd "\C-p") 'company-select-previous)
 (define-key company-active-map (kbd "\C-d") 'company-show-doc-buffer)
@@ -359,9 +352,9 @@
 (use-package embark
   :ensure t
   :bind
-  (("C-." . embark-act)         
-   ("C-;" . embark-dwim)        
-   ("C-h B" . embark-bindings)) 
+  (("C-c a" . embark-act)         
+   ("C-c d" . embark-dwim)        
+   ("C-c b" . embark-bindings)) 
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   :config
