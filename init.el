@@ -346,6 +346,38 @@
 ;; Symbolic link settings
 (setq find-file-visit-truename t)
 
+(use-package marginalia
+  :ensure t
+  :bind (:map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+  :init
+  (marginalia-mode))
+
+(use-package embark
+  :ensure t
+  :bind
+  (("C-." . embark-act)         
+   ("C-;" . embark-dwim)        
+   ("C-h B" . embark-bindings)) 
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+(use-package embark-consult
+  :ensure t 
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
 ;; -------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
