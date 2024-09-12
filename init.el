@@ -355,6 +355,8 @@
   :ensure t)
 (rg-enable-default-bindings)
 (setq rg-group-result t)
+(global-set-key (kbd "C-c d") 'rg-dwim)
+(global-set-key (kbd "C-c r") 'rg-project)
 
 (use-package marginalia
   :ensure t
