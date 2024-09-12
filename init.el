@@ -361,9 +361,10 @@
 (use-package embark
   :ensure t
   :bind
-  (("C-c a" . embark-act)         
+  (("C-c a" . embark-act)
+   ("C-." . embark-act)            
    ("C-c d" . embark-dwim)        
-   ("C-c b" . embark-bindings)) 
+   ("C-c b" . embark-bindings))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   :config
