@@ -351,6 +351,11 @@
 ;; Symbolic link settings
 (setq find-file-visit-truename t)
 
+(use-package rg
+  :ensure t)
+(rg-enable-default-bindings)
+(setq rg-group-result t)
+
 (use-package marginalia
   :ensure t
   :bind (:map minibuffer-local-map
