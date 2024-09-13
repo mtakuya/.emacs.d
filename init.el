@@ -429,6 +429,10 @@
 (eval-after-load 'company
   '(push 'company-robe company-backends))
 
+(use-package projectile-rails
+  :ensure t)
+(projectile-rails-global-mode)
+
 ;; -------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
