@@ -168,7 +168,7 @@
   :custom-face
   (lsp-ui-doc-background ((t (:background "gray10")))))
 
-;; (global-set-key (kbd "C-c C-l") 'lsp-ui-doc-show)
+(global-set-key (kbd "C-c C-u") 'lsp-ui-doc-show)
 (setq lsp-lens-enable nil)
 (setq lsp-ui-doc-enable t)
 (setq lsp-ui-doc-header t)
@@ -357,7 +357,7 @@
   (setq doom-modeline-buffer-file-name-style 'file-name)
   (setq doom-modeline-project-detection 'project))
 
-;; Symbolic link settings
+;; Symbolic link setting
 (setq find-file-visit-truename t)
 
 (use-package rg
