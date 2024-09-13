@@ -422,6 +422,13 @@
   :bind*
   ("C-c ; ;" . howm-menu))
 
+(use-package robe
+  :ensure t)
+(add-hook 'ruby-mode-hook 'robe-mode)
+(add-hook 'ruby-ts-mode-hook 'robe-mode)
+(eval-after-load 'company
+  '(push 'company-robe company-backends))
+
 ;; -------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
