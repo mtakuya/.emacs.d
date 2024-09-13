@@ -202,11 +202,6 @@
 		    :underline t
                     :weight 'bold)
 
-(set-face-attribute 'ivy-minibuffer-match-face-1 nil
-                    :background nil
-                    :foreground ivy-fg-color
-                    :weight 'bold)
-
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
 (setq ivy-count-format "(%d/%d) ")
