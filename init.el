@@ -322,7 +322,8 @@
 
 (use-package magit
   :ensure t)
-(global-set-key (kbd "C-c C-l") 'magit-log-current)
+(global-set-key (kbd "C-c l") 'magit-log-current)
+(global-set-key (kbd "C-c C-l") 'magit-log-buffer-file)
 
 (use-package which-key
   :ensure t
@@ -356,7 +357,6 @@
   :ensure t)
 (rg-enable-default-bindings)
 (setq rg-group-result t)
-(global-set-key (kbd "C-c d") 'rg-dwim)
 (global-set-key (kbd "C-c r") 'rg-project)
 
 (use-package marginalia
@@ -371,7 +371,8 @@
   :bind
   (("C-c a" . embark-act)
    ("C-." . embark-act)            
-   ("C-c d" . embark-dwim)        
+   ("C-c d" . embark-dwim)
+   ("C-," . embark-dwim)           
    ("C-c b" . embark-bindings))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
