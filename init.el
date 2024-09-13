@@ -20,6 +20,14 @@
   (package-refresh-contents)
   (byte-recompile-directory package-user-dir nil 'force))
 
+(defun kill-other-buffers ()
+  "Kill all buffers but the current one.Don't mess with special buffers."
+  (interactive)
+  (dolist (buffer (buffer-list))
+    (unless (or (eql buffer (current-buffer)) 
+                (not (buffer-file-name buffer)))
+      (kill-buffer buffer))))
+
 (setq make-backup-files nil)
 (setq create-lockfiles nil)
 (setq ring-bell-function 'ignore)
@@ -31,6 +39,10 @@
 (electric-pair-mode 1)
 (which-function-mode 1)
 (show-paren-mode t)
+;; Move between windows using the Shift key and arrow keys.
+(windmove-default-keybindings)
+;; Saving Emacs Sessions
+(desktop-save-mode 1)
 
 (set-face-background 'mode-line "gray10")
 (set-face-foreground 'mode-line "gray95")
@@ -156,7 +168,7 @@
   :custom-face
   (lsp-ui-doc-background ((t (:background "gray10")))))
 
-(global-set-key (kbd "C-c C-l") 'lsp-ui-doc-show)
+;; (global-set-key (kbd "C-c C-l") 'lsp-ui-doc-show)
 (setq lsp-lens-enable nil)
 (setq lsp-ui-doc-enable t)
 (setq lsp-ui-doc-header t)
@@ -256,8 +268,7 @@
   :init
   (projectile-mode +1)
   :bind (:map projectile-mode-map
-	      ("C-c p" . projectile-command-map)
-              ("C-c C-p" . projectile-command-map)))
+	      ("C-c p" . projectile-command-map)))
 
 (use-package popwin
   :ensure t)
@@ -323,6 +334,7 @@
 (use-package magit
   :ensure t)
 (global-set-key (kbd "C-c l") 'magit-log-current)
+;; To view the git history of a specific range of lines, select the region first and then execute.
 (global-set-key (kbd "C-c C-l") 'magit-log-buffer-file)
 
 (use-package which-key
@@ -386,6 +398,22 @@
   :ensure t 
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package dumb-jump
+  :ensure t
+  :bind (("M-g o" . dumb-jump-go-other-window)
+         ("M-g j" . dumb-jump-go)
+         ("M-g b" . dumb-jump-back)
+         ("M-g i" . dumb-jump-go-prompt)
+         ("M-g x" . dumb-jump-go-prefer-external)
+         ("M-g z" . dumb-jump-go-prefer-external-other-window))
+  :config (setq dumb-jump-selector 'ivy)
+  (setq dumb-jump-prefer-searcher 'rg))
+
+(use-package goto-line-preview
+  :ensure t)
+(setq goto-line-preview-hl-duration 1.5)
+(set-face-attribute 'goto-line-preview-hl nil :foreground "#AAAAAA" :background "gray10" :underline t)
 
 ;; -------------------------------------------------------------
 (custom-set-variables
