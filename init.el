@@ -410,6 +410,18 @@
 (setq goto-line-preview-hl-duration 1.5)
 (set-face-attribute 'goto-line-preview-hl nil :foreground "#AAAAAA" :background "gray10" :underline t)
 
+(use-package howm
+  :ensure t
+  :init
+  (setq howm-directory "~/howm")
+  (setq howm-home-directory howm-directory)
+  (setq howm-file-name-format "%Y-%m-%d-%H%M%S.org")
+  (setq howm-view-title-header "*")
+  (setq howm-dtime-format "<%Y-%m-%d %a %H:%M>")
+  (setq howm-prefix (kbd "C-c ;"))
+  :bind*
+  ("C-c ; ;" . howm-menu))
+
 ;; -------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
