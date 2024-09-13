@@ -322,7 +322,7 @@
 
 (use-package magit
   :ensure t)
-(global-set-key (kbd "C-c C-f") 'magit-log-current)
+(global-set-key (kbd "C-c C-l") 'magit-log-current)
 
 (use-package which-key
   :ensure t
