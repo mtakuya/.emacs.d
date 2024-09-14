@@ -294,7 +294,11 @@
   :ensure t)
 
 (use-package consult
-  :ensure t)
+  :ensure t
+  :config
+  ;; Reflect marginalia in consult-recent-file
+  (setq consult--source-recent-file
+	(plist-put consult--source-recent-file :annotate #'marginalia-annotate-file)))
 (global-set-key (kbd "C-s") 'consult-line)
 (global-set-key (kbd "C-x C-b") 'consult-buffer)
 (global-set-key (kbd "C-x C-r") 'consult-recent-file)
