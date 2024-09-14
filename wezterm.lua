@@ -80,12 +80,6 @@ if wezterm.target_triple == 'x86_64-apple-darwin' or
 	 args = { 'top' },
       },
       {
-	 label = 'Google chrome',
-	 args = {
-	    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-	 },
-      },
-      {
 	 label = 'Perplexity',
 	 args = {
 	    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',	    
@@ -154,12 +148,6 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
 	 label = 'Visual Studio 2022',
 	 args = {
 	    'C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/devenv.exe',
-	 },
-      },
-      {
-	 label = 'Google chrome',
-	 args = {
-	    'C:/Program Files/Google/Chrome/Application/chrome.exe',
 	 },
       },
       {
