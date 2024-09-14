@@ -13,7 +13,7 @@
 /eln-cache
 /emacs
 /tree-sitter
-
+/var
 .lsp-session-*
 projectile-bookmarks.eld
 .emacs.desktop

@@ -192,7 +192,6 @@
 
 (require 'ivy)
 (ivy-mode 1)
-
 ;; To configure the colors for counsel-find-file, use ivy-face
 (setq ivy-bg-color "gray10")
 (setq ivy-fg-color "#AAAAAA")
