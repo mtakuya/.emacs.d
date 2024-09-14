@@ -410,6 +410,12 @@
 (setq goto-line-preview-hl-duration 1.5)
 (set-face-attribute 'goto-line-preview-hl nil :foreground "#AAAAAA" :background "gray10" :underline t)
 
+(use-package org-modern
+  :ensure t)
+(add-hook 'org-mode-hook #'org-modern-mode)
+(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+(with-eval-after-load 'org (global-org-modern-mode))
+
 (use-package howm
   :ensure t
   :init
