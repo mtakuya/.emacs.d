@@ -41,8 +41,6 @@
 (show-paren-mode t)
 ;; Move between windows using the Shift key and arrow keys.
 (windmove-default-keybindings)
-;; Saving Emacs Sessions
-(desktop-save-mode 1)
 
 (set-face-background 'mode-line "gray10")
 (set-face-foreground 'mode-line "gray95")
@@ -57,8 +55,6 @@
 
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
-(add-to-list 'exec-path (expand-file-name "~/go/bin/"))
-
 (use-package diff-hl
   :ensure t
   :init
@@ -70,6 +66,8 @@
   (diff-hl-delete ((t (:background "gray10"))))
   (diff-hl-insert ((t (:background "gray10")))))
 
+(add-to-list 'exec-path (expand-file-name "~/go/bin/"))
+
 (use-package go-mode
   :ensure t)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
@@ -78,12 +76,10 @@
 (use-package go-dlv
   :ensure t)
 
-(use-package direx
-  :ensure t)
-
 (use-package dirvish
-  :ensure t)
-(dirvish-override-dired-mode)
+  :ensure t
+  :config
+  (dirvish-override-dired-mode))
 
 (use-package go-eldoc
   :ensure t)
@@ -91,9 +87,6 @@
 (use-package flycheck
   :ensure t)
 (add-hook 'go-mode-hook 'flycheck-mode)
-
-(use-package go-playground
-  :ensure t)
 
 (use-package lsp-mode
   :ensure t
@@ -136,11 +129,19 @@
 (use-package lsp-mode
   :ensure t
   :init
-  (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-keymap-prefix "C-x l")
   :hook ((go-mode rust-mode). lsp)
-  :commands lsp)
-(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+  :commands lsp
+  :config
+  (lsp-enable-which-key-integration t))
+
+(use-package lsp-ivy
+  :ensure t
+  :commands lsp-ivy-workspace-symbol)
+
+(use-package lsp-treemacs
+  :ensure t
+  :commands lsp-treemacs-errors-list)
 
 (use-package lsp-rust
   :defer t
@@ -229,17 +230,10 @@
 
 (use-package dired-subtree
   :ensure t
-  :demand
-  :bind
-  (:map dired-mode-map
-    ("<enter>" . mhj/dwim-toggle-or-open)
-    ("<return>" . mhj/dwim-toggle-or-open)
-    ("<tab>" . mhj/dwim-toggle-or-open))
+  :after dired
   :config
-  (progn
-    ;; Function to customize the line prefixes (I simply indent the lines a bit)
-    (setq dired-subtree-line-prefix (lambda (depth) (make-string (* 2 depth) ?\s)))
-    (setq dired-subtree-use-backgrounds nil)))
+  (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
+  (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map))
 
 ;;https://www.flycheck.org/en/latest/user/error-reports.html#fringe-and-margin-icons
 ;; Show indicators in the left margin
@@ -306,9 +300,6 @@
 (global-set-key (kbd "C-s") 'consult-line)
 (global-set-key (kbd "C-x C-b") 'consult-buffer)
 (global-set-key (kbd "C-x C-r") 'consult-recent-file)
-
-(use-package find-file-in-project
-  :ensure t)
 
 (use-package neotree
   :ensure t)
@@ -438,6 +429,12 @@
 (use-package projectile-rails
   :ensure t)
 (projectile-rails-global-mode)
+
+(use-package prescient
+  :ensure t
+  :config
+  (setq prescient-aggressive-file-save t)
+  (prescient-persist-mode +1))
 
 ;; -------------------------------------------------------------
 (custom-set-variables
