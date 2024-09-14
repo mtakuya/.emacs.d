@@ -178,9 +178,6 @@
 (setq lsp-ui-doc-max-height 50)
 (setq lsp-ui-peek-enable t)
 
-(use-package ivy
-  :ensure t)
-
 (use-package swiper
   :ensure t)
 
@@ -190,6 +187,8 @@
 (use-package counsel-at-point
   :ensure t)
 
+(use-package ivy
+  :ensure t)
 (require 'ivy)
 (ivy-mode 1)
 ;; To configure the colors for counsel-find-file, use ivy-face
