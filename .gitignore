@@ -14,7 +14,7 @@
 /emacs
 /tree-sitter
 /var
-request/
+/request
 
 .lsp-session-*
 projectile-bookmarks.eld
