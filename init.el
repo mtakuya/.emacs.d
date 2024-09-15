@@ -459,8 +459,6 @@
 			   (erase-buffer)
 			   (insert data)
 			   (html-mode)
-			   (web-mode-buffer-indent)
-			   (delete-trailing-whitespace)
 			   (display-buffer (current-buffer))))))
     :error
     (cl-function (lambda (&rest args &key error-thrown &allow-other-keys)
