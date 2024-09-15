@@ -74,8 +74,8 @@
 (use-package go-eldoc
   :ensure t)
 
-;; Adjust margins and fringe widths…
 (defun my/set-flycheck-margins ()
+  ;; Adjust margins and fringe widths…  
   (setq left-fringe-width 8 right-fringe-width 0
         left-margin-width 1 right-margin-width 0)
   (flycheck-refresh-fringes-and-margins))
@@ -83,10 +83,7 @@
 (use-package flycheck
   :ensure t
   :config
-  ;;https://www.flycheck.org/en/latest/user/error-reports.html#fringe-and-margin-icons
-  ;; Show indicators in the left margin
   (setq flycheck-indication-mode 'left-margin)
-  ;; …every time Flycheck is activated in a new buffer
   (add-hook 'flycheck-mode-hook #'my/set-flycheck-margins)
   (add-hook 'go-mode-hook 'flycheck-mode))
 
@@ -122,8 +119,6 @@
   (set-face-attribute 'company-echo nil :foreground company-fg-color :background company-bg-color)
   (set-face-attribute 'company-echo-common nil :foreground company-fg-color :background company-bg-color))
 
-;; https://emacs-lsp.github.io/lsp-mode/page/installation/
-;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
 (use-package lsp-mode
   :ensure t
   :init
@@ -153,7 +148,6 @@
   :config (add-hook 'rust-mode-hook #'lsp)
   :custom rust-format-on-save t)
 
-;; https://emacs-lsp.github.io/lsp-ui/
 (use-package lsp-ui
   :ensure t
   :custom ((lsp-ui-doc-enable))
@@ -206,8 +200,8 @@
   (setq ivy-initial-inputs-alist
 	(assq-delete-all 'counsel-M-x ivy-initial-inputs-alist)))
 
-;; https://github.com/doomemacs/themes
 (use-package doom-themes
+  ;; https://github.com/doomemacs/themes  
   :ensure t
   :config
   (setq doom-themes-enable-bold t    
