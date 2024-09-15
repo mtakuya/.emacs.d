@@ -1,7 +1,7 @@
 (package-initialize)
 
 (setq package-user-dir "~/.emacs.d/elpa")
-(setq max-lisp-eval-depth 10000)
+
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -14,33 +14,20 @@
         ("melpa stable" . "https://stable.melpa.org/packages/")
         ("org" . "https://orgmode.org/elpa/")))
 
-(defun recompile-elpa ()
-  "Recompile packages in elpa directory."
-  (interactive)
-  (package-refresh-contents)
-  (byte-recompile-directory package-user-dir nil 'force))
-
-(defun kill-other-buffers ()
-  "Kill all buffers but the current one.Don't mess with special buffers."
-  (interactive)
-  (dolist (buffer (buffer-list))
-    (unless (or (eql buffer (current-buffer)) 
-                (not (buffer-file-name buffer)))
-      (kill-buffer buffer))))
-
 (setq make-backup-files nil)
 (setq create-lockfiles nil)
 (setq ring-bell-function 'ignore)
 (setq confirm-kill-emacs 'y-or-n-p)
+(setq enable-recursive-minibuffers t)
+(setq max-lisp-eval-depth 10000)
+(setq which-func-unknown "N/A")
 
 (menu-bar-mode 0)
 (windmove-default-keybindings)
 (save-place-mode 1)
 (electric-pair-mode 1)
 (which-function-mode 1)
-(setq which-func-unknown "N/A")
 (show-paren-mode t)
-
 ;; Move between windows using the Shift key and arrow keys.
 (windmove-default-keybindings)
 
@@ -68,12 +55,12 @@
   (diff-hl-delete ((t (:background "gray10"))))
   (diff-hl-insert ((t (:background "gray10")))))
 
-(add-to-list 'exec-path (expand-file-name "~/go/bin/"))
-
 (use-package go-mode
-  :ensure t)
-(add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-(add-hook 'before-save-hook 'gofmt-before-save)
+  :ensure t
+  :config
+  (add-to-list 'exec-path (expand-file-name "~/go/bin/"))  
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
 
 (use-package go-dlv
   :ensure t)
@@ -86,41 +73,53 @@
 (use-package go-eldoc
   :ensure t)
 
+;; Adjust margins and fringe widths…
+(defun my/set-flycheck-margins ()
+  (setq left-fringe-width 8 right-fringe-width 0
+        left-margin-width 1 right-margin-width 0)
+  (flycheck-refresh-fringes-and-margins))
+
 (use-package flycheck
-  :ensure t)
-(add-hook 'go-mode-hook 'flycheck-mode)
+  :ensure t
+  :config
+  ;;https://www.flycheck.org/en/latest/user/error-reports.html#fringe-and-margin-icons
+  ;; Show indicators in the left margin
+  (setq flycheck-indication-mode 'left-margin)
+  ;; …every time Flycheck is activated in a new buffer
+  (add-hook 'flycheck-mode-hook #'my/set-flycheck-margins)
+  (add-hook 'go-mode-hook 'flycheck-mode))
 
 (use-package company
-  :ensure t)
-(global-company-mode)
-(add-hook 'after-init-hook 'global-company-mode)
-(setq company-idle-delay 0)
-(setq company-minimum-prefix-length 2)
-(setq company-tooltip-limit 10)
-(setq company-selection-wrap-around t)
-(setq company-bg-color "gray10")
-(setq company-fg-color "#AAAAAA")
-(setq company-selection-color "white")
-
-(set-face-attribute 'company-preview nil :foreground company-fg-color :background company-bg-color)
-(set-face-attribute 'company-preview-common nil :foreground company-fg-color :background company-bg-color :underline t)
-(set-face-attribute 'company-preview-search nil :foreground company-fg-color :background company-bg-color :underline t)
-(set-face-attribute 'company-tooltip nil :foreground company-fg-color :background company-bg-color)
-(set-face-attribute 'company-tooltip-common nil :foreground company-fg-color :background company-bg-color)
-
-(set-face-attribute 'company-tooltip-common-selection nil :foreground company-selection-color :background company-bg-color :underline t :weight 'bold)
-(set-face-attribute 'company-tooltip-selection nil :foreground company-selection-color :background company-bg-color :underline t :weight 'bold)
-(set-face-attribute 'company-tooltip-annotation-selection nil :foreground company-selection-color :background company-bg-color :underline t :weight 'bold)
-
-(set-face-attribute 'company-tooltip-annotation nil :foreground company-fg-color :background company-bg-color)
-(set-face-attribute 'company-tooltip-search nil :foreground company-fg-color :background company-bg-color)
-(set-face-attribute 'company-tooltip-search-selection nil :foreground company-fg-color :background company-bg-color)
-
-(set-face-attribute 'company-scrollbar-fg nil :background company-bg-color)
-(set-face-attribute 'company-scrollbar-bg nil :background company-bg-color)
-
-(set-face-attribute 'company-echo nil :foreground company-fg-color :background company-bg-color)
-(set-face-attribute 'company-echo-common nil :foreground company-fg-color :background company-bg-color)
+  :ensure t
+  :config
+  (global-company-mode)
+  (add-hook 'after-init-hook 'global-company-mode)
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 2)
+  (setq company-tooltip-limit 10)
+  (setq company-selection-wrap-around t)
+  (setq company-bg-color "gray10")
+  (setq company-fg-color "#AAAAAA")
+  (setq company-selection-color "white")
+  (define-key company-active-map (kbd "\C-n") 'company-select-next)
+  (define-key company-active-map (kbd "\C-p") 'company-select-previous)
+  (define-key company-active-map (kbd "\C-d") 'company-show-doc-buffer)
+  (define-key company-active-map (kbd "M-.") 'company-show-location)
+  (set-face-attribute 'company-preview nil :foreground company-fg-color :background company-bg-color)
+  (set-face-attribute 'company-preview-common nil :foreground company-fg-color :background company-bg-color :underline t)
+  (set-face-attribute 'company-preview-search nil :foreground company-fg-color :background company-bg-color :underline t)
+  (set-face-attribute 'company-tooltip nil :foreground company-fg-color :background company-bg-color)
+  (set-face-attribute 'company-tooltip-common nil :foreground company-fg-color :background company-bg-color)
+  (set-face-attribute 'company-tooltip-common-selection nil :foreground company-selection-color :background company-bg-color :underline t :weight 'bold)
+  (set-face-attribute 'company-tooltip-selection nil :foreground company-selection-color :background company-bg-color :underline t :weight 'bold)
+  (set-face-attribute 'company-tooltip-annotation-selection nil :foreground company-selection-color :background company-bg-color :underline t :weight 'bold)
+  (set-face-attribute 'company-tooltip-annotation nil :foreground company-fg-color :background company-bg-color)
+  (set-face-attribute 'company-tooltip-search nil :foreground company-fg-color :background company-bg-color)
+  (set-face-attribute 'company-tooltip-search-selection nil :foreground company-fg-color :background company-bg-color)
+  (set-face-attribute 'company-scrollbar-fg nil :background company-bg-color)
+  (set-face-attribute 'company-scrollbar-bg nil :background company-bg-color)
+  (set-face-attribute 'company-echo nil :foreground company-fg-color :background company-bg-color)
+  (set-face-attribute 'company-echo-common nil :foreground company-fg-color :background company-bg-color))
 
 ;; https://emacs-lsp.github.io/lsp-mode/page/installation/
 ;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
@@ -150,64 +149,61 @@
 
 (use-package rust-mode
   :ensure t
+  :config (add-hook 'rust-mode-hook #'lsp)
   :custom rust-format-on-save t)
-(add-hook 'rust-mode-hook #'lsp)
 
 ;; https://emacs-lsp.github.io/lsp-ui/
 (use-package lsp-ui
   :ensure t
   :custom ((lsp-ui-doc-enable))
   :hook ((lsp-mode-hook . lsp-ui-mode))
+  :bind ("C-c C-u" . lsp-ui-doc-show)
+  :config
+  (setq lsp-lens-enable nil)
+  (setq lsp-ui-doc-enable t)
+  (setq lsp-ui-doc-header t)
+  (setq lsp-ui-doc-include-signature t)
+  (setq lsp-ui-doc-max-width 100)
+  (setq lsp-ui-doc-max-height 50)
+  (setq lsp-ui-peek-enable t)
   :custom-face
   (lsp-ui-doc-background ((t (:background "gray10")))))
-
-(global-set-key (kbd "C-c C-u") 'lsp-ui-doc-show)
-(setq lsp-lens-enable nil)
-(setq lsp-ui-doc-enable t)
-(setq lsp-ui-doc-header t)
-(setq lsp-ui-doc-include-signature t)
-(setq lsp-ui-doc-max-width 100)
-(setq lsp-ui-doc-max-height 50)
-(setq lsp-ui-peek-enable t)
 
 (use-package swiper
   :ensure t)
 
 (use-package counsel
-  :ensure t)
+  :ensure t
+  :bind
+  (("M-x" . counsel-M-x)
+  ("C-x C-j" . counsel-M-x)
+  ("C-x C-f" . counsel-find-file)
+  ("C-c g" . counsel-git-grep)
+  ("C-c C-g" . counsel-at-point-git-grep)
+  ("C-c i" . counsel-imenu)
+  ("C-c C-i" . counsel-at-point-imenu)))
 
 (use-package counsel-at-point
   :ensure t)
 
 (use-package ivy
-  :ensure t)
-(require 'ivy)
-(ivy-mode 1)
-;; To configure the colors for counsel-find-file, use ivy-face
-(setq ivy-bg-color "gray10")
-(setq ivy-fg-color "#AAAAAA")
-(setq ivy-selection-color "white")
-(set-face-attribute 'ivy-current-match nil
-                    :background ivy-bg-color
-                    :foreground ivy-fg-color
-		    :underline t
-                    :weight 'bold)
-
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
-(setq ivy-count-format "(%d/%d) ")
-
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-j") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(global-set-key (kbd "C-c g") 'counsel-git-grep)
-(global-set-key (kbd "C-c C-g") 'counsel-at-point-git-grep)
-(global-set-key (kbd "C-c i") 'counsel-imenu)
-(global-set-key (kbd "C-c C-i") 'counsel-at-point-imenu)
-
-;; Don't insert an initial ^ (caret) when calling counsel-M-x.
-(setq ivy-initial-inputs-alist
-      (assq-delete-all 'counsel-M-x ivy-initial-inputs-alist))
+  :ensure t
+  :config
+  (ivy-mode 1)
+  (setq ivy-bg-color "gray10")
+  (setq ivy-fg-color "#AAAAAA")
+  (setq ivy-selection-color "white")
+  ;; To configure the colors for counsel, use ivy-face  
+  (set-face-attribute 'ivy-current-match nil
+                      :background ivy-bg-color
+                      :foreground ivy-fg-color
+		      :underline t
+                      :weight 'bold)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  ;; Don't insert an initial ^ (caret) when calling counsel-M-x.
+  (setq ivy-initial-inputs-alist
+	(assq-delete-all 'counsel-M-x ivy-initial-inputs-alist)))
 
 ;; https://github.com/doomemacs/themes
 (use-package doom-themes
@@ -225,22 +221,10 @@
   (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
   (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map))
 
-;;https://www.flycheck.org/en/latest/user/error-reports.html#fringe-and-margin-icons
-;; Show indicators in the left margin
-(setq flycheck-indication-mode 'left-margin)
-
-;; Adjust margins and fringe widths…
-(defun my/set-flycheck-margins ()
-  (setq left-fringe-width 8 right-fringe-width 0
-        left-margin-width 1 right-margin-width 0)
-  (flycheck-refresh-fringes-and-margins))
-
-;; …every time Flycheck is activated in a new buffer
-(add-hook 'flycheck-mode-hook #'my/set-flycheck-margins)
-
 (use-package quickrun
-  :ensure t)
-(global-set-key (kbd "C-c C-c") 'quickrun)
+  :ensure t
+  :bind
+  (("C-c C-c" . quickrun)))
 
 (use-package projectile
   :ensure t
@@ -250,9 +234,10 @@
 	      ("C-c p" . projectile-command-map)))
 
 (use-package popwin
-  :ensure t)
-(setq display-buffer-function 'popwin:display-buffer)
-(push '("*quickrun*") popwin:special-display-config)
+  :ensure t
+  :config
+  (setq display-buffer-function 'popwin:display-buffer)
+  (push '("*quickrun*") popwin:special-display-config))
 
 (require 'recentf)
 (recentf-mode 1)
@@ -260,24 +245,20 @@
 (setq recentf-max-menu-items 100)
 
 (use-package yasnippet
-  :ensure t)
-(add-to-list 'load-path
-              "~/.emacs.d/snippets")
-(yas-global-mode 1)
-(global-set-key (kbd "C-c y") 'company-yasnippet)
-(global-set-key (kbd "C-c C-y") 'company-yasnippet)
-(define-key company-active-map (kbd "\C-n") 'company-select-next)
-(define-key company-active-map (kbd "\C-p") 'company-select-previous)
-(define-key company-active-map (kbd "\C-d") 'company-show-doc-buffer)
-(define-key company-active-map (kbd "M-.") 'company-show-location)
+  :ensure t
+  :config
+  (add-to-list 'load-path "~/.emacs.d/snippets")
+  (yas-global-mode 1)
+  (global-set-key (kbd "C-c y") 'company-yasnippet)
+  (global-set-key (kbd "C-c C-y") 'company-yasnippet))
 
 (use-package minions
   :ensure t
   :config
-  (minions-mode 1))
-(add-hook 'after-init-hook #'(lambda ()
-                               (minions-mode)
-                               (setq minions-mode-line-lighter "")))
+  (minions-mode 1)
+  (add-hook 'after-init-hook #'(lambda ()
+				 (minions-mode)
+				 (setq minions-mode-line-lighter ""))))
 
 (use-package nasm-mode
   :ensure t)
@@ -290,14 +271,15 @@
   :config
   ;; Reflect marginalia in consult-recent-file
   (setq consult--source-recent-file
-	(plist-put consult--source-recent-file :annotate #'marginalia-annotate-file)))
-(global-set-key (kbd "C-s") 'consult-line)
-(global-set-key (kbd "C-x C-b") 'consult-buffer)
-(global-set-key (kbd "C-x C-r") 'consult-recent-file)
+	(plist-put consult--source-recent-file :annotate #'marginalia-annotate-file))
+  :bind
+  (("C-s" . consult-line)
+   ("C-x C-b" . consult-buffer)
+   ("C-x C-r" . consult-recent-file)))
 
 (use-package neotree
-  :ensure t)
-(global-set-key (kbd "C-o") 'neotree)
+  :ensure t
+  :bind ("C-o" . neotree))
 
 (use-package lua-mode
   :ensure t)
@@ -312,10 +294,11 @@
   (global-treesit-auto-mode))
 
 (use-package magit
-  :ensure t)
-(global-set-key (kbd "C-c l") 'magit-log-current)
-;; To view the git history of a specific range of lines, select the region first and then execute.
-(global-set-key (kbd "C-c C-l") 'magit-log-buffer-file)
+  :ensure t
+  :bind
+  (("C-c l" . magit-log-current)
+   ;; To view the git history of a specific range of lines, select the region first and then execute.
+   ("C-c C-l" . magit-log-buffer-file)))
 
 (use-package doom-modeline
   :ensure t
@@ -335,10 +318,12 @@
 (setq find-file-visit-truename t)
 
 (use-package rg
-  :ensure t)
-(rg-enable-default-bindings)
-(setq rg-group-result t)
-(global-set-key (kbd "C-c r") 'rg-project)
+  :ensure t
+  :config
+  (rg-enable-default-bindings)
+  (setq rg-group-result t)
+  :bind
+  ("C-c r" . rg-project))
 
 (use-package marginalia
   :ensure t
@@ -370,19 +355,22 @@
 
 (use-package dumb-jump
   :ensure t
-  :config (setq dumb-jump-selector 'ivy)
+  :config
+  (setq dumb-jump-selector 'ivy)
   (setq dumb-jump-prefer-searcher 'rg))
 
 (use-package goto-line-preview
-  :ensure t)
-(setq goto-line-preview-hl-duration 1.5)
-(set-face-attribute 'goto-line-preview-hl nil :foreground "#AAAAAA" :background "gray10" :underline t)
+  :ensure t
+  :config
+  (setq goto-line-preview-hl-duration 1.5)
+  (set-face-attribute 'goto-line-preview-hl nil :foreground "#AAAAAA" :background "gray10" :underline t))
 
 (use-package org-modern
-  :ensure t)
-(add-hook 'org-mode-hook #'org-modern-mode)
-(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
-(with-eval-after-load 'org (global-org-modern-mode))
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook #'org-modern-mode)
+  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+  (with-eval-after-load 'org (global-org-modern-mode)))
 
 (use-package howm
   :ensure t
@@ -397,15 +385,16 @@
   ("C-c ; ;" . howm-menu))
 
 (use-package robe
-  :ensure t)
-(add-hook 'ruby-mode-hook 'robe-mode)
-(add-hook 'ruby-ts-mode-hook 'robe-mode)
-(eval-after-load 'company
-  '(push 'company-robe company-backends))
+  :ensure t
+  :config
+  (add-hook 'ruby-mode-hook 'robe-mode)
+  (add-hook 'ruby-ts-mode-hook 'robe-mode)
+  (eval-after-load 'company
+    '(push 'company-robe company-backends)))
 
 (use-package projectile-rails
-  :ensure t)
-(projectile-rails-global-mode)
+  :ensure t
+  :config (projectile-rails-global-mode))
 
 (use-package prescient
   :ensure t
@@ -420,6 +409,20 @@
   :ensure t)
 
 ;; -------------------------------------------------------------
+
+(defun recompile-elpa ()
+  "Recompile packages in elpa directory."
+  (interactive)
+  (package-refresh-contents)
+  (byte-recompile-directory package-user-dir nil 'force))
+
+(defun kill-other-buffers ()
+  "Kill all buffers but the current one.Don't mess with special buffers."
+  (interactive)
+  (dolist (buffer (buffer-list))
+    (unless (or (eql buffer (current-buffer)) 
+                (not (buffer-file-name buffer)))
+      (kill-buffer buffer))))
 
 (defun extract-webpage-content (url)
   (interactive "sEnter URL: ")
