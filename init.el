@@ -2,7 +2,6 @@
 
 (setq package-user-dir "~/.emacs.d/elpa")
 
-
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -21,6 +20,8 @@
 (setq enable-recursive-minibuffers t)
 (setq max-lisp-eval-depth 10000)
 (setq which-func-unknown "N/A")
+;; Symbolic link setting
+(setq find-file-visit-truename t)
 
 (menu-bar-mode 0)
 (windmove-default-keybindings)
@@ -313,9 +314,6 @@
   (setq doom-modeline-env-enable-rust t)
   (setq doom-modeline-buffer-file-name-style 'file-name)
   (setq doom-modeline-project-detection 'project))
-
-;; Symbolic link setting
-(setq find-file-visit-truename t)
 
 (use-package rg
   :ensure t
