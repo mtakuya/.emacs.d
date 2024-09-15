@@ -17,7 +17,8 @@
 /request
 
 .lsp-session-*
-projectile-bookmarks.eld
+.cache/
 .emacs.desktop
 .emacs.desktop.lock
 projects
+projectile-bookmarks.eld

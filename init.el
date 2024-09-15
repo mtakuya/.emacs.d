@@ -19,7 +19,6 @@
 (setq confirm-kill-emacs 'y-or-n-p)
 (setq enable-recursive-minibuffers t)
 (setq max-lisp-eval-depth 10000)
-(setq which-func-unknown "N/A")
 ;; Symbolic link setting
 (setq find-file-visit-truename t)
 
@@ -27,7 +26,6 @@
 (windmove-default-keybindings)
 (save-place-mode 1)
 (electric-pair-mode 1)
-(which-function-mode 1)
 (show-paren-mode t)
 ;; Move between windows using the Shift key and arrow keys.
 (windmove-default-keybindings)
@@ -44,6 +42,11 @@
  '(hl-line ((t (:background "#222222")))))
 
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
+
+(use-package which-func
+  :defer t
+  :init
+  (which-function-mode 1))
 
 (use-package diff-hl
   :ensure t
@@ -132,7 +135,8 @@
 
 (use-package lsp-treemacs
   :ensure t
-  :commands lsp-treemacs-errors-list)
+  :config
+  (lsp-treemacs-sync-mode 1))
 
 (use-package lsp-rust
   :defer t
@@ -272,9 +276,24 @@
    ("C-x C-b" . consult-buffer)
    ("C-x C-r" . consult-recent-file)))
 
-(use-package neotree
+(use-package treemacs
   :ensure t
-  :bind ("C-o" . neotree))
+  :defer t
+  :bind ("C-o" . treemacs)
+  :config
+  (setq treemacs-file-event-delay 2000)
+  (setq treemacs-file-follow-delay 0.2)
+  (treemacs-filewatch-mode t)
+  (treemacs-hide-gitignored-files-mode t)
+  (add-hook 'treemacs-mode-hook (lambda () (which-function-mode -1))))
+
+(use-package treemacs-projectile
+  :after (treemacs projectile)
+  :ensure t)
+
+(use-package treemacs-magit
+  :after (treemacs magit)
+  :ensure t)
 
 (use-package lua-mode
   :ensure t)
@@ -398,6 +417,9 @@
   :ensure t)
 
 (use-package dockerfile-mode
+  :ensure t)
+
+(use-package know-your-http-well
   :ensure t)
 
 ;; -------------------------------------------------------------
