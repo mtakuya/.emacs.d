@@ -90,10 +90,6 @@
   :ensure t)
 (add-hook 'go-mode-hook 'flycheck-mode)
 
-(use-package lsp-mode
-  :ensure t
-  :commands (lsp lsp-deferred))
-
 (use-package company
   :ensure t)
 (global-company-mode)
@@ -133,9 +129,7 @@
   :init
   (setq lsp-keymap-prefix "C-x l")
   :hook ((go-mode rust-mode). lsp)
-  :commands lsp
-  :config
-  (lsp-enable-which-key-integration t))
+  :commands (lsp lsp-deferred))
 
 (use-package lsp-ivy
   :ensure t
@@ -153,10 +147,6 @@
   (lsp-rust-analyzer-server-display-inlay-hints t)
   (lsp-rust-analyzer-display-parameter-hints t)
   (lsp-rust-analyzer-display-chaining-hints t))
-
-(global-set-key (kbd "M-*") 'xref-pop-marker-stack)
-(global-set-key (kbd "M-.") 'xref-find-definitions)
-(global-set-key (kbd "M-/") 'xref-find-references)
 
 (use-package rust-mode
   :ensure t
@@ -327,17 +317,6 @@
 ;; To view the git history of a specific range of lines, select the region first and then execute.
 (global-set-key (kbd "C-c C-l") 'magit-log-buffer-file)
 
-(use-package which-key
-  :ensure t
-  :init
-  (setq which-key-separator " ")
-  (setq which-key-prefix-prefix "+")
-  :config
-  (which-key-mode)
-  (setq which-key-idle-delay 1)
-  (setq which-key-max-description-length 40)
-  (setq which-key-max-display-columns nil))
-
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
@@ -391,12 +370,6 @@
 
 (use-package dumb-jump
   :ensure t
-  :bind (("M-g o" . dumb-jump-go-other-window)
-         ("M-g j" . dumb-jump-go)
-         ("M-g b" . dumb-jump-back)
-         ("M-g i" . dumb-jump-go-prompt)
-         ("M-g x" . dumb-jump-go-prefer-external)
-         ("M-g z" . dumb-jump-go-prefer-external-other-window))
   :config (setq dumb-jump-selector 'ivy)
   (setq dumb-jump-prefer-searcher 'rg))
 
@@ -443,7 +416,7 @@
 (use-package request
   :ensure t)
 
-(use-package web-mode
+(use-package dockerfile-mode
   :ensure t)
 
 ;; -------------------------------------------------------------
