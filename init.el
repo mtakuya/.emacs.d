@@ -37,6 +37,7 @@
 
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 (define-key global-map (kbd "C-x C-j") 'execute-extended-command)
+(define-key global-map (kbd "C-x j") 'execute-extended-command)
 
 (set-face-background 'mode-line "gray10")
 (set-face-foreground 'mode-line "gray95")
