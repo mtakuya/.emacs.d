@@ -80,18 +80,12 @@
   :config
   (dirvish-override-dired-mode))
 
-(defun my/set-flycheck-margins ()
-  ;; Adjust margins and fringe widths…  
-  (setq left-fringe-width 8 right-fringe-width 0
-        left-margin-width 1 right-margin-width 0)
-  (flycheck-refresh-fringes-and-margins))
-
 (use-package flycheck
   :ensure t
   :defer t
   :config
   (setq flycheck-indication-mode 'left-margin)
-  (add-hook 'flycheck-mode-hook #'my/set-flycheck-margins)
+  (add-hook 'flycheck-mode-hook #'my-set-flycheck-margins)
   (add-hook 'go-mode-hook 'flycheck-mode))
 
 (use-package company
@@ -354,8 +348,8 @@
   :bind
   (("C-c a" . embark-act)
    ("C-." . embark-act)            
-   ("C-c d" . my-embark-dwim-read-only)
-   ("C-," . my-embark-dwim-read-only)           
+   ("C-c d" . embark-dwim)
+   ("C-," . embark-dwim)           
    ("C-c b" . embark-bindings))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
@@ -379,6 +373,7 @@
 
 (use-package goto-line-preview
   :ensure t
+  :defer t
   :config
   (setq goto-line-preview-hl-duration 1.5)
   (set-face-attribute 'goto-line-preview-hl nil :foreground "#AAAAAA" :background "gray10" :underline t))
@@ -481,13 +476,11 @@
   (consult-line (thing-at-point 'symbol)))
 (global-set-key (kbd "C-c s") 'my-consult-line-symbol-at-point)
 
-(defun my-embark-dwim-read-only ()
-  "Set items opened by embark-dwim to read-only mode. C-x C-q toggles read-only mode"
-  (interactive)
-  (let ((buffer (current-buffer)))
-    (embark-dwim)
-    (with-current-buffer buffer
-      (read-only-mode 1))))
+(defun my-set-flycheck-margins ()
+  ;; Adjust margins and fringe widths…  
+  (setq left-fringe-width 8 right-fringe-width 0
+        left-margin-width 1 right-margin-width 0)
+  (flycheck-refresh-fringes-and-margins))
 
 ;; -------------------------------------------------------------
 (custom-set-variables
