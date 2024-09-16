@@ -147,6 +147,7 @@
 
 (use-package rust-mode
   :ensure t
+  :defer t
   :config (add-hook 'rust-mode-hook #'lsp)
   :custom rust-format-on-save t)
 
