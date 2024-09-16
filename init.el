@@ -237,10 +237,11 @@
   (setq display-buffer-function 'popwin:display-buffer)
   (push '("*quickrun*") popwin:special-display-config))
 
-(require 'recentf)
-(recentf-mode 1)
-(setq recentf-max-saved-items 100)
-(setq recentf-max-menu-items 100)
+(use-package recentf
+  :init
+  (setq recentf-max-saved-items 100)
+  (setq recentf-max-menu-items 100)
+  (recentf-mode 1))
 
 (use-package yasnippet
   :ensure t
