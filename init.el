@@ -253,8 +253,8 @@
   :config
   (add-to-list 'load-path "~/.emacs.d/snippets")
   (yas-global-mode 1)
-  (global-set-key (kbd "C-c y") 'company-yasnippet)
-  (global-set-key (kbd "C-c C-y") 'company-yasnippet))
+  :bind
+  (("C-c y" . company-yasnippet) ("C-c C-y" . company-yasnippet)))
 
 (use-package minions
   :ensure t
@@ -474,6 +474,11 @@
                    (message "Got error: %S" error-thrown)))
     :complete
     (lambda (&rest _) (message "Finished!"))))
+
+(defun consult-line-symbol-at-point ()
+  (interactive)
+  (consult-line (thing-at-point 'symbol)))
+(global-set-key (kbd "C-c s") 'consult-line-symbol-at-point)
 
 ;; -------------------------------------------------------------
 (custom-set-variables
