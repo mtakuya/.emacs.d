@@ -89,7 +89,7 @@
   :defer t
   :config
   (setq flycheck-indication-mode 'left-margin)
-  (add-hook 'flycheck-mode-hook #'my-set-flycheck-margins)
+  (add-hook 'flycheck-mode-hook #'my/set-flycheck-margins)
   (add-hook 'go-mode-hook 'flycheck-mode))
 
 (use-package company
@@ -449,13 +449,13 @@
 
 ;; -------------------------------------------------------------
 
-(defun my-recompile-elpa ()
+(defun my/recompile-elpa ()
   "Recompile packages in elpa directory."
   (interactive)
   (package-refresh-contents)
   (byte-recompile-directory package-user-dir nil 'force))
 
-(defun my-kill-other-buffers ()
+(defun my/kill-other-buffers ()
   "Kill all buffers but the current one.Don't mess with special buffers."
   (interactive)
   (dolist (buffer (buffer-list))
@@ -463,7 +463,7 @@
                 (not (buffer-file-name buffer)))
       (kill-buffer buffer))))
 
-(defun my-extract-webpage-content (url)
+(defun my/extract-webpage-content (url)
   (interactive "sEnter URL: ")
   (request url
     :parser 'buffer-string
@@ -481,12 +481,12 @@
     :complete
     (lambda (&rest _) (message "Finished!"))))
 
-(defun my-consult-line-symbol-at-point ()
+(defun my/consult-line-symbol-at-point ()
   (interactive)
   (consult-line (thing-at-point 'symbol)))
-(global-set-key (kbd "C-c C-s") 'my-consult-line-symbol-at-point)
+(global-set-key (kbd "C-c C-s") 'my/consult-line-symbol-at-point)
 
-(defun my-set-flycheck-margins ()
+(defun my/set-flycheck-margins ()
   ;; Adjust margins and fringe widths…
   (setq left-fringe-width 8 right-fringe-width 0
         left-margin-width 1 right-margin-width 0)
