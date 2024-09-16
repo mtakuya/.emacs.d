@@ -475,7 +475,7 @@
 (defun my-consult-line-symbol-at-point ()
   (interactive)
   (consult-line (thing-at-point 'symbol)))
-(global-set-key (kbd "C-c s") 'my-consult-line-symbol-at-point)
+(global-set-key (kbd "C-c C-s") 'my-consult-line-symbol-at-point)
 
 (defun my-set-flycheck-margins ()
   ;; Adjust margins and fringe widths…  
