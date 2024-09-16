@@ -22,6 +22,10 @@
 ;; Symbolic link setting
 (setq find-file-visit-truename t)
 (setq vc-handled-backends '(Git))
+(setq sentence-end-double-space nil)
+(setq require-final-newline t)
+(setq show-trailing-whitespace t)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (menu-bar-mode 0)
 (windmove-default-keybindings)
@@ -30,6 +34,7 @@
 (show-paren-mode t)
 ;; Move between windows using the Shift key and arrow keys.
 (windmove-default-keybindings)
+(define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
 (set-face-background 'mode-line "gray10")
 (set-face-foreground 'mode-line "gray95")
@@ -41,8 +46,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(hl-line ((t (:background "#222222")))))
-
-(define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
 (use-package which-func
   :defer t
@@ -64,7 +67,7 @@
   :ensure t
   :defer t
   :config
-  (add-to-list 'exec-path (expand-file-name "~/go/bin/"))  
+  (add-to-list 'exec-path (expand-file-name "~/go/bin/"))
   (add-hook 'before-save-hook 'gofmt-before-save)
   (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
 
@@ -192,7 +195,7 @@
   (setq ivy-bg-color "gray10")
   (setq ivy-fg-color "#AAAAAA")
   (setq ivy-selection-color "white")
-  ;; To configure the colors for counsel, use ivy-face  
+  ;; To configure the colors for counsel, use ivy-face
   (set-face-attribute 'ivy-current-match nil
                       :background ivy-bg-color
                       :foreground ivy-fg-color
@@ -205,11 +208,11 @@
 	(assq-delete-all 'counsel-M-x ivy-initial-inputs-alist)))
 
 (use-package doom-themes
-  ;; https://github.com/doomemacs/themes  
+  ;; https://github.com/doomemacs/themes
   :ensure t
   :config
-  (setq doom-themes-enable-bold t    
-        doom-themes-enable-italic t) 
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t)
   (load-theme 'doom-one t)
   (setq doom-themes-treemacs-theme "doom-atom"))
 
@@ -350,9 +353,9 @@
   :ensure t
   :bind
   (("C-c a" . embark-act)
-   ("C-." . embark-act)            
+   ("C-." . embark-act)
    ("C-c d" . embark-dwim)
-   ("C-," . embark-dwim)           
+   ("C-," . embark-dwim)
    ("C-c b" . embark-bindings))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
@@ -363,7 +366,7 @@
                  (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult
-  :ensure t 
+  :ensure t
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
@@ -456,7 +459,7 @@
   "Kill all buffers but the current one.Don't mess with special buffers."
   (interactive)
   (dolist (buffer (buffer-list))
-    (unless (or (eql buffer (current-buffer)) 
+    (unless (or (eql buffer (current-buffer))
                 (not (buffer-file-name buffer)))
       (kill-buffer buffer))))
 
@@ -484,7 +487,7 @@
 (global-set-key (kbd "C-c C-s") 'my-consult-line-symbol-at-point)
 
 (defun my-set-flycheck-margins ()
-  ;; Adjust margins and fringe widths…  
+  ;; Adjust margins and fringe widths…
   (setq left-fringe-width 8 right-fringe-width 0
         left-margin-width 1 right-margin-width 0)
   (flycheck-refresh-fringes-and-margins))
