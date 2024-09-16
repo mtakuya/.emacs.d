@@ -61,21 +61,24 @@
 
 (use-package go-mode
   :ensure t
+  :defer t
   :config
   (add-to-list 'exec-path (expand-file-name "~/go/bin/"))  
   (add-hook 'before-save-hook 'gofmt-before-save)
   (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
 
 (use-package go-dlv
-  :ensure t)
+  :ensure t
+  :defer t)
+
+(use-package go-eldoc
+  :ensure t
+  :defer t)
 
 (use-package dirvish
   :ensure t
   :config
   (dirvish-override-dired-mode))
-
-(use-package go-eldoc
-  :ensure t)
 
 (defun my/set-flycheck-margins ()
   ;; Adjust margins and fringe widths…  
@@ -85,6 +88,7 @@
 
 (use-package flycheck
   :ensure t
+  :defer t
   :config
   (setq flycheck-indication-mode 'left-margin)
   (add-hook 'flycheck-mode-hook #'my/set-flycheck-margins)
@@ -245,6 +249,7 @@
 
 (use-package yasnippet
   :ensure t
+  :defer t
   :config
   (add-to-list 'load-path "~/.emacs.d/snippets")
   (yas-global-mode 1)
@@ -260,10 +265,12 @@
 				 (setq minions-mode-line-lighter ""))))
 
 (use-package nasm-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package masm-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package consult
   :ensure t
@@ -296,7 +303,8 @@
   :ensure t)
 
 (use-package lua-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package treesit-auto
   :ensure t
@@ -338,8 +346,6 @@
 
 (use-package marginalia
   :ensure t
-  :bind (:map minibuffer-local-map
-         ("M-A" . marginalia-cycle))
   :init
   (marginalia-mode))
 
@@ -378,6 +384,7 @@
 
 (use-package org-modern
   :ensure t
+  :defer t
   :config
   (add-hook 'org-mode-hook #'org-modern-mode)
   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
@@ -385,6 +392,7 @@
 
 (use-package howm
   :ensure t
+  :defer t
   :init
   (setq howm-directory "~/howm")
   (setq howm-home-directory howm-directory)
@@ -397,6 +405,7 @@
 
 (use-package robe
   :ensure t
+  :defer t
   :config
   (add-hook 'ruby-mode-hook 'robe-mode)
   (add-hook 'ruby-ts-mode-hook 'robe-mode)
@@ -405,6 +414,7 @@
 
 (use-package projectile-rails
   :ensure t
+  :defer t
   :config (projectile-rails-global-mode))
 
 (use-package prescient
@@ -414,13 +424,16 @@
   (prescient-persist-mode +1))
 
 (use-package request
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package dockerfile-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package know-your-http-well
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;; -------------------------------------------------------------
 
