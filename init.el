@@ -423,6 +423,12 @@
   (setq prescient-aggressive-file-save t)
   (prescient-persist-mode +1))
 
+(use-package company-prescient
+  :ensure t)
+
+(use-package ivy-prescient
+  :ensure t)
+
 (use-package request
   :ensure t
   :defer t)
