@@ -354,8 +354,8 @@
   :bind
   (("C-c a" . embark-act)
    ("C-." . embark-act)            
-   ("C-c d" . embark-dwim)
-   ("C-," . embark-dwim)           
+   ("C-c d" . my-embark-dwim-read-only)
+   ("C-," . my-embark-dwim-read-only)           
    ("C-c b" . embark-bindings))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
@@ -443,13 +443,13 @@
 
 ;; -------------------------------------------------------------
 
-(defun recompile-elpa ()
+(defun my-recompile-elpa ()
   "Recompile packages in elpa directory."
   (interactive)
   (package-refresh-contents)
   (byte-recompile-directory package-user-dir nil 'force))
 
-(defun kill-other-buffers ()
+(defun my-kill-other-buffers ()
   "Kill all buffers but the current one.Don't mess with special buffers."
   (interactive)
   (dolist (buffer (buffer-list))
@@ -457,7 +457,7 @@
                 (not (buffer-file-name buffer)))
       (kill-buffer buffer))))
 
-(defun extract-webpage-content (url)
+(defun my-extract-webpage-content (url)
   (interactive "sEnter URL: ")
   (request url
     :parser 'buffer-string
@@ -475,10 +475,18 @@
     :complete
     (lambda (&rest _) (message "Finished!"))))
 
-(defun consult-line-symbol-at-point ()
+(defun my-consult-line-symbol-at-point ()
   (interactive)
   (consult-line (thing-at-point 'symbol)))
-(global-set-key (kbd "C-c s") 'consult-line-symbol-at-point)
+(global-set-key (kbd "C-c s") 'my-consult-line-symbol-at-point)
+
+(defun my-embark-dwim-read-only ()
+  "Set items opened by embark-dwim to read-only mode. C-x C-q toggles read-only mode"
+  (interactive)
+  (let ((buffer (current-buffer)))
+    (embark-dwim)
+    (with-current-buffer buffer
+      (read-only-mode 1))))
 
 ;; -------------------------------------------------------------
 (custom-set-variables
