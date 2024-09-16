@@ -29,8 +29,8 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (menu-bar-mode 0)
 (windmove-default-keybindings)
-(save-place-mode 1)
-(electric-pair-mode 1)
+(save-place-mode +1)
+(electric-pair-mode +1)
 (show-paren-mode t)
 ;; Move between windows using the Shift key and arrow keys.
 (windmove-default-keybindings)
@@ -51,7 +51,7 @@
 (use-package which-func
   :defer t
   :init
-  (which-function-mode 1))
+  (which-function-mode +1))
 
 (use-package diff-hl
   :ensure t
@@ -130,7 +130,7 @@
 (use-package lsp-treemacs
   :ensure t
   :config
-  (lsp-treemacs-sync-mode 1))
+  (lsp-treemacs-sync-mode +1))
 
 (use-package lsp-rust
   :defer t
@@ -193,21 +193,21 @@
   :init
   (setq recentf-max-saved-items 100)
   (setq recentf-max-menu-items 100)
-  (recentf-mode 1))
+  (recentf-mode +1))
 
 (use-package yasnippet
   :ensure t
   :defer t
   :config
   (add-to-list 'load-path "~/.emacs.d/snippets")
-  (yas-global-mode 1)
+  (yas-global-mode +1)
   :bind
   (("C-c y" . company-yasnippet) ("C-c C-y" . company-yasnippet)))
 
 (use-package minions
   :ensure t
   :config
-  (minions-mode 1)
+  (minions-mode +1)
   (add-hook 'after-init-hook #'(lambda ()
 				 (minions-mode)
 				 (setq minions-mode-line-lighter ""))))
@@ -257,7 +257,7 @@
 
 (use-package doom-modeline
   :ensure t
-  :init (doom-modeline-mode 1)
+  :init (doom-modeline-mode +1)
   :config
   (setq doom-modeline-vcs-max-length 30)
   (setq doom-modeline-icon nil)
@@ -340,10 +340,14 @@
   (prescient-persist-mode +1))
 
 (use-package company-prescient
-  :ensure t)
+  :ensure t
+  :config
+  (company-prescient-mode +1))
 
 (use-package vertico-prescient
-  :ensure t)
+  :ensure t
+  :config
+  (vertico-prescient-mode +1))
 
 (use-package request
   :ensure t
@@ -363,13 +367,12 @@
 
 (use-package vertico
   :ensure t
+  :custom
+  (vertico-count 20)
+  (vertico-cycle t)
   :init
-  (vertico-mode)
-  :config
-  (setq vertico-buffer-height 15)
-  (setq vertico-cycle t)
-  (setq vertico-buffer-name "*Vertico*")
-  (vertico-multiform-mode))
+  (vertico-mode))
+(vertico-multiform-mode)
 
 (use-package savehist
   :init
