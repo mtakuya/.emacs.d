@@ -298,14 +298,6 @@
                  nil
                  (window-parameters (mode-line-format . none)))))
 
-(use-package goto-line-preview
-  :ensure t
-  :defer t
-  :config
-  (setq goto-line-preview-hl-duration 1.5)
-  :custom-face
-  (goto-line-preview-hl ((t (foreground "#AAAAAA" :background "gray10" :underline t)))))
-
 (use-package org-modern
   :ensure t
   :defer t
@@ -440,13 +432,5 @@
   (setq left-fringe-width 8 right-fringe-width 0
         left-margin-width 1 right-margin-width 0)
   (flycheck-refresh-fringes-and-margins))
-
-;; -------------------------------------------------------------
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages '(request dirvish flycheck gopls use-package)))
 
 ;; -------------------------------------------------------------
