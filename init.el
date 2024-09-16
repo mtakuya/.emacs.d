@@ -25,8 +25,8 @@
 (setq sentence-end-double-space nil)
 (setq require-final-newline t)
 (setq show-trailing-whitespace t)
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 (menu-bar-mode 0)
 (windmove-default-keybindings)
 (save-place-mode 1)
@@ -34,18 +34,18 @@
 (show-paren-mode t)
 ;; Move between windows using the Shift key and arrow keys.
 (windmove-default-keybindings)
+
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
+(define-key global-map (kbd "C-x C-j") 'execute-extended-command)
 
 (set-face-background 'mode-line "gray10")
 (set-face-foreground 'mode-line "gray95")
 
-(global-hl-line-mode t)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(hl-line ((t (:background "#222222")))))
+(use-package hl-line
+  :init
+  (global-hl-line-mode +1)
+  :custom-face
+  (hl-line ((t (:background "#222222")))))
 
 (use-package which-func
   :defer t
@@ -67,8 +67,8 @@
   :ensure t
   :defer t
   :config
-  (add-to-list 'exec-path (expand-file-name "~/go/bin/"))
   (add-hook 'before-save-hook 'gofmt-before-save)
+  (add-to-list 'exec-path (expand-file-name "~/go/bin/"))
   (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
 
 (use-package go-dlv
@@ -78,11 +78,6 @@
 (use-package go-eldoc
   :ensure t
   :defer t)
-
-(use-package dirvish
-  :ensure t
-  :config
-  (dirvish-override-dired-mode))
 
 (use-package flycheck
   :ensure t
@@ -131,10 +126,6 @@
   :hook ((go-mode rust-mode). lsp)
   :commands (lsp lsp-deferred))
 
-(use-package lsp-ivy
-  :ensure t
-  :commands lsp-ivy-workspace-symbol)
-
 (use-package lsp-treemacs
   :ensure t
   :config
@@ -171,57 +162,13 @@
   :custom-face
   (lsp-ui-doc-background ((t (:background "gray10")))))
 
-(use-package swiper
-  :ensure t)
-
-(use-package counsel
-  :ensure t
-  :bind
-  (("M-x" . counsel-M-x)
-  ("C-x C-j" . counsel-M-x)
-  ("C-x C-f" . counsel-find-file)
-  ("C-c g" . counsel-git-grep)
-  ("C-c C-g" . counsel-at-point-git-grep)
-  ("C-c i" . counsel-imenu)
-  ("C-c C-i" . counsel-at-point-imenu)))
-
-(use-package counsel-at-point
-  :ensure t)
-
-(use-package ivy
-  :ensure t
-  :config
-  (ivy-mode 1)
-  (setq ivy-bg-color "gray10")
-  (setq ivy-fg-color "#AAAAAA")
-  (setq ivy-selection-color "white")
-  ;; To configure the colors for counsel, use ivy-face
-  (set-face-attribute 'ivy-current-match nil
-                      :background ivy-bg-color
-                      :foreground ivy-fg-color
-		      :underline t
-                      :weight 'bold)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
-  ;; Don't insert an initial ^ (caret) when calling counsel-M-x.
-  (setq ivy-initial-inputs-alist
-	(assq-delete-all 'counsel-M-x ivy-initial-inputs-alist)))
-
 (use-package doom-themes
-  ;; https://github.com/doomemacs/themes
   :ensure t
   :config
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
   (load-theme 'doom-one t)
   (setq doom-themes-treemacs-theme "doom-atom"))
-
-(use-package dired-subtree
-  :ensure t
-  :after dired
-  :config
-  (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
-  (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map))
 
 (use-package quickrun
   :ensure t
@@ -272,17 +219,6 @@
   :ensure t
   :defer t)
 
-(use-package consult
-  :ensure t
-  :config
-  ;; Reflect marginalia in consult-recent-file
-  (setq consult--source-recent-file
-	(plist-put consult--source-recent-file :annotate #'marginalia-annotate-file))
-  :bind
-  (("C-s" . consult-line)
-   ("C-x C-b" . consult-buffer)
-   ("C-x C-r" . consult-recent-file)))
-
 (use-package treemacs
   :ensure t
   :defer t
@@ -301,10 +237,6 @@
 (use-package treemacs-magit
   :after (treemacs magit)
   :ensure t)
-
-(use-package lua-mode
-  :ensure t
-  :defer t)
 
 (use-package treesit-auto
   :ensure t
@@ -365,24 +297,13 @@
                  nil
                  (window-parameters (mode-line-format . none)))))
 
-(use-package embark-consult
-  :ensure t
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
-
-(use-package dumb-jump
-  :ensure t
-  :defer t
-  :config
-  (setq dumb-jump-selector 'ivy)
-  (setq dumb-jump-prefer-searcher 'rg))
-
 (use-package goto-line-preview
   :ensure t
   :defer t
   :config
   (setq goto-line-preview-hl-duration 1.5)
-  (set-face-attribute 'goto-line-preview-hl nil :foreground "#AAAAAA" :background "gray10" :underline t))
+  :custom-face
+  (goto-line-preview-hl ((t (foreground "#AAAAAA" :background "gray10" :underline t)))))
 
 (use-package org-modern
   :ensure t
@@ -428,7 +349,7 @@
 (use-package company-prescient
   :ensure t)
 
-(use-package ivy-prescient
+(use-package vertico-prescient
   :ensure t)
 
 (use-package request
@@ -446,6 +367,38 @@
 (use-package so-long
   :init
   (global-so-long-mode +1))
+
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode)
+  :config
+  (setq vertico-buffer-height 15)
+  (setq vertico-cycle t)
+  (setq vertico-buffer-name "*Vertico*")
+  (vertico-multiform-mode))
+
+(use-package savehist
+  :init
+  (savehist-mode))
+
+(use-package vertico-buffer
+  :after vertico
+  :init (vertico-buffer-mode))
+
+(use-package vertico-directory
+  :after vertico
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word)))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
 
 ;; -------------------------------------------------------------
 
@@ -480,11 +433,6 @@
                    (message "Got error: %S" error-thrown)))
     :complete
     (lambda (&rest _) (message "Finished!"))))
-
-(defun my/consult-line-symbol-at-point ()
-  (interactive)
-  (consult-line (thing-at-point 'symbol)))
-(global-set-key (kbd "C-c C-s") 'my/consult-line-symbol-at-point)
 
 (defun my/set-flycheck-margins ()
   ;; Adjust margins and fringe widths…
