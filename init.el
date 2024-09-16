@@ -21,6 +21,7 @@
 (setq max-lisp-eval-depth 10000)
 ;; Symbolic link setting
 (setq find-file-visit-truename t)
+(setq vc-handled-backends '(Git))
 
 (menu-bar-mode 0)
 (windmove-default-keybindings)
@@ -438,6 +439,10 @@
 (use-package know-your-http-well
   :ensure t
   :defer t)
+
+(use-package so-long
+  :init
+  (global-so-long-mode +1))
 
 ;; -------------------------------------------------------------
 
