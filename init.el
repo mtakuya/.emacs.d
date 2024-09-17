@@ -395,6 +395,7 @@
 
 (use-package consult
   :ensure t
+  :demand
   :bind
   (("C-s" . consult-line)
    ("C-i" . consult-imenu)
@@ -402,7 +403,7 @@
    ("C-x b" . consult-buffer)
    ("C-c g" . consult-git-grep)
    ("C-c C-g" . consult-grep)
-   ("C-c C-f" . consult-find))
+   ("C-c f" . consult-find))
   :config
   (setq consult-preview-key 'any)
   (consult-customize
