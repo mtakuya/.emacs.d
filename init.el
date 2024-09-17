@@ -127,6 +127,22 @@
   :hook ((go-mode rust-mode). lsp)
   :commands (lsp lsp-deferred))
 
+(use-package lsp-ui
+  :ensure t
+  :custom ((lsp-ui-doc-enable))
+  :hook ((lsp-mode-hook . lsp-ui-mode))
+  :bind ("C-c C-u" . lsp-ui-doc-show)
+  :config
+  (setq lsp-lens-enable nil)
+  (setq lsp-ui-doc-enable t)
+  (setq lsp-ui-doc-header t)
+  (setq lsp-ui-doc-include-signature t)
+  (setq lsp-ui-doc-max-width 100)
+  (setq lsp-ui-doc-max-height 50)
+  (setq lsp-ui-peek-enable t)
+  :custom-face
+  (lsp-ui-doc-background ((t (:background "gray10")))))
+
 (use-package lsp-treemacs
   :ensure t
   :config
@@ -146,22 +162,6 @@
   :defer t
   :config (add-hook 'rust-mode-hook #'lsp)
   :custom rust-format-on-save t)
-
-(use-package lsp-ui
-  :ensure t
-  :custom ((lsp-ui-doc-enable))
-  :hook ((lsp-mode-hook . lsp-ui-mode))
-  :bind ("C-c C-u" . lsp-ui-doc-show)
-  :config
-  (setq lsp-lens-enable nil)
-  (setq lsp-ui-doc-enable t)
-  (setq lsp-ui-doc-header t)
-  (setq lsp-ui-doc-include-signature t)
-  (setq lsp-ui-doc-max-width 100)
-  (setq lsp-ui-doc-max-height 50)
-  (setq lsp-ui-peek-enable t)
-  :custom-face
-  (lsp-ui-doc-background ((t (:background "gray10")))))
 
 (use-package doom-themes
   :ensure t
@@ -193,7 +193,8 @@
   :init
   (setq recentf-max-saved-items 100)
   (setq recentf-max-menu-items 100)
-  (recentf-mode +1))
+  (recentf-mode +1)
+  :bind ("C-c r" . recentf))
 
 (use-package yasnippet
   :ensure t
@@ -275,7 +276,7 @@
   (rg-enable-default-bindings)
   (setq rg-group-result t)
   :bind
-  ("C-c r" . rg-project))
+  ("C-c C-r" . rg-project))
 
 (use-package marginalia
   :ensure t
@@ -378,10 +379,6 @@
   :init
   (savehist-mode))
 
-(use-package vertico-buffer
-  :after vertico
-  :init (vertico-buffer-mode))
-
 (use-package vertico-directory
   :after vertico
   :bind (:map vertico-map
@@ -395,6 +392,33 @@
   (completion-styles '(orderless basic))
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
+
+(use-package consult
+  :ensure t
+  :bind
+  (("C-s" . consult-line)
+   ("C-i" . consult-imenu)
+   ("C-c C-i" . consult-imenu-multi)
+   ("C-x b" . consult-buffer)
+   ("C-c g" . consult-git-grep)
+   ("C-c C-g" . consult-grep)
+   ("C-c C-f" . consult-find))
+  :config
+  (setq consult-preview-key 'any)
+  (consult-customize
+   consult-theme :preview-key '(:debounce 0.2 any)
+   consult-ripgrep consult-git-grep consult-grep
+   consult-recent-file consult-xref
+   consult--source-file-register
+   consult--source-recent-file consult--source-project-recent-file
+   :preview-key "M-."))
+
+(use-package embark-consult
+  :ensure t
+  :after (embark consult)
+  :demand t
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; -------------------------------------------------------------
 
