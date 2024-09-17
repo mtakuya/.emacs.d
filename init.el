@@ -1,7 +1,10 @@
 (package-initialize)
 
-(setq package-user-dir "~/.emacs.d/elpa")
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
 
+(setq package-user-dir "~/.emacs.d/elpa")
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
