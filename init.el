@@ -193,8 +193,7 @@
   :init
   (setq recentf-max-saved-items 100)
   (setq recentf-max-menu-items 100)
-  (recentf-mode +1)
-  :bind ("C-c r" . recentf))
+  (recentf-mode +1))
 
 (use-package yasnippet
   :ensure t
@@ -403,7 +402,8 @@
    ("C-x b" . consult-buffer)
    ("C-c g" . consult-git-grep)
    ("C-c C-g" . consult-grep)
-   ("C-c f" . consult-find))
+   ("C-c f" . consult-find)
+   ("C-x C-r" . consult-recent-file))
   :config
   (setq consult-preview-key 'any)
   (consult-customize
