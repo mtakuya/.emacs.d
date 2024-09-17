@@ -60,8 +60,9 @@
   :ensure t
   :init
   (global-diff-hl-mode)
-  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   (unless (window-system) (diff-hl-margin-mode))
+  :hook
+  ((dired-mode . diff-hl-dired-mode))
   :custom-face
   (diff-hl-change ((t (:background "gray10"))))
   (diff-hl-delete ((t (:background "gray10"))))
@@ -205,7 +206,8 @@
   (add-to-list 'load-path "~/.emacs.d/snippets")
   (yas-global-mode +1)
   :bind
-  (("C-c y" . company-yasnippet) ("C-c C-y" . company-yasnippet)))
+  (("C-c y" . company-yasnippet)
+   ("C-c C-y" . company-yasnippet)))
 
 (use-package minions
   :ensure t
@@ -253,6 +255,9 @@
 
 (use-package magit
   :ensure t
+  :config
+  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   :bind
   (("C-c l" . magit-log-current)
    ;; To view the git history of a specific range of lines, select the region first and then execute.
