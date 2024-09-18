@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-./tools-install.sh 
-./go-tools-install.sh
-./rust-tools-install.sh
+./tools-install.sh
+./go-install.sh
+./rust-install.sh
 ./set-env.sh
