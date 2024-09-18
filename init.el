@@ -305,14 +305,20 @@
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
                  (window-parameters (mode-line-format . none)))))
-(use-package org)
+
+(use-package org
+  :ensure t
+  :defer
+  :config
+  (add-hook 'org-mode-hook 'howm-mode)
+  (add-hook 'org-mode-hook 'org-modern-mode)
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
 (use-package org-modern
   :ensure t
   :after org
   :defer t
   :config
-  (add-hook 'org-mode-hook #'org-modern-mode)
   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
   (with-eval-after-load 'org (global-org-modern-mode)))
 
