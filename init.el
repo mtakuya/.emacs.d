@@ -439,7 +439,6 @@
   :bind
   (("C-s" . consult-line)
    ("C-c C-s" . my/consult-line-symbol-at-point)
-   ("C-i" . consult-imenu)
    ("C-c C-i" . consult-imenu-multi)
    ("C-x b" . consult-buffer)
    ("C-c g" . consult-git-grep)
