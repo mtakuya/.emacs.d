@@ -335,6 +335,24 @@
   :bind*
   ("C-c ; ;" . howm-menu))
 
+(use-package ruby-mode
+  :ensure t
+  :defer t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.gemspec\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Gemfile\\'" . ruby-mode)))
+
+(use-package rbenv
+  :ensure t
+  :defer t
+  :config
+  (setq rbenv-installation-dir "~/.rbenv")
+  (global-rbenv-mode))
+
 (use-package robe
   :ensure t
   :defer t
@@ -343,6 +361,13 @@
   (add-hook 'ruby-ts-mode-hook 'robe-mode)
   (eval-after-load 'company
     '(push 'company-robe company-backends)))
+
+(use-package eglot
+  :ensure t
+  :config
+  (add-hook 'ruby-mode-hook 'eglot-ensure))
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp")))
 
 (use-package projectile-rails
   :ensure t
