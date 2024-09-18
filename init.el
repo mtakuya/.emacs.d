@@ -405,6 +405,7 @@
   :demand
   :bind
   (("C-s" . consult-line)
+   ("C-c C-s" . my/consult-line-symbol-at-point)
    ("C-i" . consult-imenu)
    ("C-c C-i" . consult-imenu-multi)
    ("C-x b" . consult-buffer)
@@ -468,5 +469,9 @@
   (setq left-fringe-width 8 right-fringe-width 0
         left-margin-width 1 right-margin-width 0)
   (flycheck-refresh-fringes-and-margins))
+
+(defun my/consult-line-symbol-at-point ()
+  (interactive)
+  (consult-line (thing-at-point 'symbol)))
 
 ;; -------------------------------------------------------------
