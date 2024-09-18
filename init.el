@@ -95,7 +95,6 @@
 (use-package company
   :ensure t
   :config
-  (global-company-mode)
   (add-hook 'after-init-hook 'global-company-mode)
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 2)
@@ -185,7 +184,7 @@
   :init
   (projectile-mode +1)
   :bind (:map projectile-mode-map
-	      ("C-c p" . projectile-command-map)))
+              ("C-c p" . projectile-command-map)))
 
 (use-package popwin
   :ensure t
@@ -214,8 +213,8 @@
   :config
   (minions-mode +1)
   (add-hook 'after-init-hook #'(lambda ()
-				 (minions-mode)
-				 (setq minions-mode-line-lighter ""))))
+                                 (minions-mode)
+                                 (setq minions-mode-line-lighter ""))))
 
 (use-package nasm-mode
   :ensure t
@@ -283,6 +282,7 @@
   (rg-enable-default-bindings)
   (setq rg-group-result t)
   :bind
+  ("C-c r" . rg-project)
   ("C-c C-r" . rg-project))
 
 (use-package marginalia
@@ -305,9 +305,11 @@
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
                  (window-parameters (mode-line-format . none)))))
+(use-package org)
 
 (use-package org-modern
   :ensure t
+  :after org
   :defer t
   :config
   (add-hook 'org-mode-hook #'org-modern-mode)
@@ -454,10 +456,10 @@
     (cl-function (lambda (&key data &allow-other-keys)
                    (when data
                      (with-current-buffer (get-buffer-create "*Webpage Content*")
-			   (erase-buffer)
-			   (insert data)
-			   (html-mode)
-			   (display-buffer (current-buffer))))))
+                       (erase-buffer)
+                       (insert data)
+                       (html-mode)
+                       (display-buffer (current-buffer))))))
     :error
     (cl-function (lambda (&rest args &key error-thrown &allow-other-keys)
                    (message "Got error: %S" error-thrown)))
@@ -473,5 +475,11 @@
 (defun my/consult-line-symbol-at-point ()
   (interactive)
   (consult-line (thing-at-point 'symbol)))
+
+(defun my/move-to-first-non-whitespace ()
+  (interactive)
+  (beginning-of-line)
+  (skip-chars-forward " \t"))
+(global-set-key (kbd "TAB") 'my/move-to-first-non-whitespace)
 
 ;; -------------------------------------------------------------
