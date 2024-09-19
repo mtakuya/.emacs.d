@@ -29,6 +29,9 @@
 (setq sentence-end-double-space nil)
 (setq require-final-newline t)
 (setq show-trailing-whitespace t)
+(setq history-length 1000)
+(setq history-delete-duplicates t)
+(setq tab-always-indent t)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (menu-bar-mode 0)
@@ -110,6 +113,13 @@
   :if (not (display-graphic-p))
   :config
   (corfu-terminal-mode +1))
+
+(use-package cape
+  :ensure t
+  :init
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-history))
 
 (use-package lsp-mode
   :ensure t
@@ -488,11 +498,5 @@
 (defun my/consult-line-symbol-at-point ()
   (interactive)
   (consult-line (thing-at-point 'symbol)))
-
-(defun my/move-to-first-non-whitespace ()
-  (interactive)
-  (beginning-of-line)
-  (skip-chars-forward " \t"))
-(global-set-key (kbd "TAB") 'my/move-to-first-non-whitespace)
 
 ;; -------------------------------------------------------------
