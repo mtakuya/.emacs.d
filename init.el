@@ -140,9 +140,7 @@
   (setq doom-themes-treemacs-theme "doom-atom"))
 
 (use-package quickrun
-  :ensure t
-  :bind
-  (("C-c C-c" . quickrun)))
+  :ensure t)
 
 (use-package projectile
   :ensure t
