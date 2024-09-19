@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: slice
-# key: slice
-# description: slice
-# --
-[]$1{$0}

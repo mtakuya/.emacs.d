@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: fmtprintln
-# key: fmtprintln
-# description: fmtprintln
-# --
-fmt.Println($0)

@@ -14,6 +14,7 @@
       '(("gnu" . "https://elpa.gnu.org/packages/")
         ("melpa" . "https://melpa.org/packages/")
         ("melpa stable" . "https://stable.melpa.org/packages/")
+	("nongnu" . "https://elpa.nongnu.org/nongnu/")
         ("org" . "https://orgmode.org/elpa/")))
 
 (setq make-backup-files nil)
@@ -44,6 +45,8 @@
 
 (set-face-background 'mode-line "gray10")
 (set-face-foreground 'mode-line "gray95")
+
+(global-auto-revert-mode +1)
 
 (use-package hl-line
   :init
@@ -92,36 +95,21 @@
   (add-hook 'flycheck-mode-hook #'my/set-flycheck-margins)
   (add-hook 'go-mode-hook 'flycheck-mode))
 
-(use-package company
+(use-package corfu
   :ensure t
+  :custom ((corfu-auto t)
+           (corfu-auto-prefix 1)
+           (corfu-auto-delay 0)
+           (corfu-cycle t))
+  :init
+  (global-corfu-mode)
+  (corfu-popupinfo-mode))
+
+(use-package corfu-terminal
+  :ensure t
+  :if (not (display-graphic-p))
   :config
-  (add-hook 'after-init-hook 'global-company-mode)
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 2)
-  (setq company-tooltip-limit 10)
-  (setq company-selection-wrap-around t)
-  (setq company-bg-color "gray10")
-  (setq company-fg-color "#AAAAAA")
-  (setq company-selection-color "white")
-  (define-key company-active-map (kbd "\C-n") 'company-select-next)
-  (define-key company-active-map (kbd "\C-p") 'company-select-previous)
-  (define-key company-active-map (kbd "\C-d") 'company-show-doc-buffer)
-  (define-key company-active-map (kbd "M-.") 'company-show-location)
-  (set-face-attribute 'company-preview nil :foreground company-fg-color :background company-bg-color)
-  (set-face-attribute 'company-preview-common nil :foreground company-fg-color :background company-bg-color :underline t)
-  (set-face-attribute 'company-preview-search nil :foreground company-fg-color :background company-bg-color :underline t)
-  (set-face-attribute 'company-tooltip nil :foreground company-fg-color :background company-bg-color)
-  (set-face-attribute 'company-tooltip-common nil :foreground company-fg-color :background company-bg-color)
-  (set-face-attribute 'company-tooltip-common-selection nil :foreground company-selection-color :background company-bg-color :underline t :weight 'bold)
-  (set-face-attribute 'company-tooltip-selection nil :foreground company-selection-color :background company-bg-color :underline t :weight 'bold)
-  (set-face-attribute 'company-tooltip-annotation-selection nil :foreground company-selection-color :background company-bg-color :underline t :weight 'bold)
-  (set-face-attribute 'company-tooltip-annotation nil :foreground company-fg-color :background company-bg-color)
-  (set-face-attribute 'company-tooltip-search nil :foreground company-fg-color :background company-bg-color)
-  (set-face-attribute 'company-tooltip-search-selection nil :foreground company-fg-color :background company-bg-color)
-  (set-face-attribute 'company-scrollbar-fg nil :background company-bg-color)
-  (set-face-attribute 'company-scrollbar-bg nil :background company-bg-color)
-  (set-face-attribute 'company-echo nil :foreground company-fg-color :background company-bg-color)
-  (set-face-attribute 'company-echo-common nil :foreground company-fg-color :background company-bg-color))
+  (corfu-terminal-mode +1))
 
 (use-package lsp-mode
   :ensure t
@@ -198,16 +186,6 @@
   (setq recentf-max-menu-items 100)
   (recentf-mode +1))
 
-(use-package yasnippet
-  :ensure t
-  :defer t
-  :config
-  (add-to-list 'load-path "~/.emacs.d/snippets")
-  (yas-global-mode +1)
-  :bind
-  (("C-c y" . company-yasnippet)
-   ("C-c C-y" . company-yasnippet)))
-
 (use-package minions
   :ensure t
   :config
@@ -255,6 +233,7 @@
 (use-package magit
   :ensure t
   :config
+  (setq magit-auto-revert-mode t)
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   :bind
@@ -461,6 +440,10 @@
   :demand t
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package delsel
+  :config
+  (delete-selection-mode +1))
 
 ;; -------------------------------------------------------------
 

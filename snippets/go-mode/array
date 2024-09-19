@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: array
-# key: array
-# description: array
-# --
-[...]$1{$0}

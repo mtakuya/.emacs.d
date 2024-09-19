@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: map
-# key: map
-# description: map
-# --
-map[$1]$2{$0}
