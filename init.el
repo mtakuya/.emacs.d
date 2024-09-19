@@ -346,9 +346,7 @@
   :defer t
   :config
   (add-hook 'ruby-mode-hook 'robe-mode)
-  (add-hook 'ruby-ts-mode-hook 'robe-mode)
-  (eval-after-load 'company
-    '(push 'company-robe company-backends)))
+  (add-hook 'ruby-ts-mode-hook 'robe-mode))
 
 (use-package eglot
   :ensure t
@@ -368,15 +366,15 @@
   (setq prescient-aggressive-file-save t)
   (prescient-persist-mode +1))
 
-(use-package company-prescient
-  :ensure t
-  :config
-  (company-prescient-mode +1))
-
 (use-package vertico-prescient
   :ensure t
   :config
   (vertico-prescient-mode +1))
+
+(use-package corfu-prescient
+  :ensure t
+  :config
+  (corfu-prescient-mode +1))
 
 (use-package request
   :ensure t
@@ -442,6 +440,12 @@
    consult--source-file-register
    consult--source-recent-file consult--source-project-recent-file
    :preview-key "M-."))
+
+(use-package consult-eglot
+  :ensure t
+  :after eglot
+  :bind ( :map eglot-mode-map
+          ("C-c s" . consult-eglot-symbols)))
 
 (use-package embark-consult
   :ensure t
