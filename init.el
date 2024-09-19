@@ -43,13 +43,21 @@
 (windmove-default-keybindings)
 
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
+
 (define-key global-map (kbd "C-x C-j") 'execute-extended-command)
 (define-key global-map (kbd "C-x j") 'execute-extended-command)
+(define-key global-map (kbd "C-c e") 'eldoc-doc-buffer)
 
 (set-face-background 'mode-line "gray10")
 (set-face-foreground 'mode-line "gray95")
 
 (global-auto-revert-mode +1)
+
+(use-package tree-sitter
+  :ensure t)
+
+(use-package tree-sitter-langs
+  :ensure t)
 
 (use-package hl-line
   :init
@@ -192,15 +200,6 @@
   :after (treemacs magit)
   :ensure t)
 
-(use-package treesit-auto
-  :ensure t
-  :custom
-  (treesit-auto-install 'prompt)
-  :config
-  (setq treesit-font-lock-level 4)
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
-
 (use-package magit
   :ensure t
   :config
@@ -312,7 +311,11 @@
   :ensure t
   :hook ((rust-mode ruby-mode go-mode) . eglot-ensure))
 (with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs '((go-mode) "gopls"))
   (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
+  (add-to-list 'eglot-server-programs
+             '((rust-mode rust-ts-mode) .
+               ("rust-analyzer" :initializationOptions (:check (:command "clippy"))))))
 
 (use-package projectile-rails
   :ensure t
