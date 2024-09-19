@@ -99,7 +99,6 @@
 
 (use-package flycheck
   :ensure t
-  :defer t
   :config
   (setq flycheck-indication-mode 'left-margin)
   (add-hook 'flycheck-mode-hook #'my/set-flycheck-margins)
@@ -316,6 +315,12 @@
   (add-to-list 'eglot-server-programs
              '((rust-mode rust-ts-mode) .
                ("rust-analyzer" :initializationOptions (:check (:command "clippy"))))))
+
+(use-package flycheck-eglot
+  :ensure t
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode +1))
 
 (use-package projectile-rails
   :ensure t
