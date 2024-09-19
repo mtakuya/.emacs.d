@@ -121,47 +121,9 @@
   (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-history))
 
-(use-package lsp-mode
-  :ensure t
-  :init
-  (setq lsp-keymap-prefix "C-x l")
-  :hook ((go-mode rust-mode). lsp)
-  :commands (lsp lsp-deferred))
-
-(use-package lsp-ui
-  :ensure t
-  :custom ((lsp-ui-doc-enable))
-  :hook ((lsp-mode-hook . lsp-ui-mode))
-  :bind ("C-c C-u" . lsp-ui-doc-show)
-  :config
-  (setq lsp-lens-enable nil)
-  (setq lsp-ui-doc-enable t)
-  (setq lsp-ui-doc-header t)
-  (setq lsp-ui-doc-include-signature t)
-  (setq lsp-ui-doc-max-width 100)
-  (setq lsp-ui-doc-max-height 50)
-  (setq lsp-ui-peek-enable t)
-  :custom-face
-  (lsp-ui-doc-background ((t (:background "gray10")))))
-
-(use-package lsp-treemacs
-  :ensure t
-  :config
-  (lsp-treemacs-sync-mode +1))
-
-(use-package lsp-rust
-  :defer t
-  :custom
-  (lsp-rust-server 'rust-analyzer)
-  (lsp-rust-analyzer-cargo-watch-command "clippy")
-  (lsp-rust-analyzer-server-display-inlay-hints t)
-  (lsp-rust-analyzer-display-parameter-hints t)
-  (lsp-rust-analyzer-display-chaining-hints t))
-
 (use-package rust-mode
   :ensure t
   :defer t
-  :config (add-hook 'rust-mode-hook #'lsp)
   :custom rust-format-on-save t)
 
 (use-package doom-themes
@@ -351,7 +313,9 @@
 (use-package eglot
   :ensure t
   :config
+  (add-hook 'rust-mode-hook 'elgot-ensure)
   (add-hook 'ruby-mode-hook 'eglot-ensure))
+
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp")))
 
