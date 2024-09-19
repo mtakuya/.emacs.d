@@ -76,7 +76,6 @@
 
 (use-package go-mode
   :ensure t
-  :defer t
   :config
   (add-hook 'before-save-hook 'gofmt-before-save)
   (add-to-list 'exec-path (expand-file-name "~/go/bin/"))
@@ -123,8 +122,8 @@
 
 (use-package rust-mode
   :ensure t
-  :defer t
-  :custom rust-format-on-save t)
+  :custom
+  (rust-format-on-save t))
 
 (use-package doom-themes
   :ensure t
@@ -287,7 +286,6 @@
 
 (use-package ruby-mode
   :ensure t
-  :defer t
   :config
   (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
   (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
@@ -312,12 +310,9 @@
 
 (use-package eglot
   :ensure t
-  :config
-  (add-hook 'rust-mode-hook 'elgot-ensure)
-  (add-hook 'ruby-mode-hook 'eglot-ensure))
-
+  :hook ((rust-mode ruby-mode go-mode) . eglot-ensure))
 (with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp")))
+  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
 
 (use-package projectile-rails
   :ensure t
