@@ -444,7 +444,7 @@
 (use-package consult-eglot
   :ensure t
   :after eglot
-  :bind ( :map eglot-mode-map
+  :bind (:map eglot-mode-map
           ("C-c s" . consult-eglot-symbols)))
 
 (use-package embark-consult
