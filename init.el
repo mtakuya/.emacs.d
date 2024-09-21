@@ -55,9 +55,6 @@
 (use-package tree-sitter
   :ensure t)
 
-(use-package tree-sitter-langs
-  :ensure t)
-
 (use-package hl-line
   :init
   (global-hl-line-mode +1)
@@ -214,10 +211,9 @@
   (setq doom-modeline-vcs-max-length 30)
   (setq doom-modeline-icon nil)
   (setq doom-modeline-workspace-name t)
+  (setq doom-modeline-enable-word-count t)
   (setq doom-modeline-lsp t)
-  (setq doom-modeline-env-enable-ruby t)
-  (setq doom-modeline-env-enable-go t)
-  (setq doom-modeline-env-enable-rust t)
+  (setq doom-modeline-env-version t)
   (setq doom-modeline-buffer-file-name-style 'file-name)
   (setq doom-modeline-project-detection 'project))
 
@@ -255,7 +251,7 @@
 
 (use-package org
   :ensure t
-  :defer
+  :defer t
   :hook
   (org-mode . howm-mode)
   (org-mode . org-modern-mode)
@@ -286,18 +282,20 @@
 (use-package ruby-mode
   :ensure t
   :config
-  (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.gemspec\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Gemfile\\'" . ruby-mode)))
+  (add-to-list 'auto-mode-alist '("\\.rb$'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.rake$'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Rakefile$'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.gemspec$'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.ru$'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Gemfile$'" . ruby-mode)))
 
 (use-package ruby-end
   :ensure t)
 
 (use-package rbenv
   :ensure t
+  :defer t
+  :hook (rbenv-mode . ruby-mode)
   :config
   (setq rbenv-installation-dir "~/.rbenv")
   (global-rbenv-mode))
