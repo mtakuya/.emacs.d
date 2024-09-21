@@ -74,8 +74,7 @@
   :init
   (global-diff-hl-mode)
   (unless (window-system) (diff-hl-margin-mode))
-  :hook
-  ((dired-mode . diff-hl-dired-mode))
+  :hook (dired-mode . diff-hl-dired-mode)
   :custom-face
   (diff-hl-change ((t (:background "gray10"))))
   (diff-hl-delete ((t (:background "gray10"))))
@@ -83,8 +82,9 @@
 
 (use-package go-mode
   :ensure t
+  :hook
+  (before-save . gofmt-before-save)
   :config
-  (add-hook 'before-save-hook 'gofmt-before-save)
   (add-to-list 'exec-path (expand-file-name "~/go/bin/"))
   (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
 
@@ -98,10 +98,11 @@
 
 (use-package flycheck
   :ensure t
+  :hook
+  (flycheck-mode . my/set-flycheck-margins)
+  (go-mode . flycheck-mode)
   :config
-  (setq flycheck-indication-mode 'left-margin)
-  (add-hook 'flycheck-mode-hook #'my/set-flycheck-margins)
-  (add-hook 'go-mode-hook 'flycheck-mode))
+  (setq flycheck-indication-mode 'left-margin))
 
 (use-package corfu
   :ensure t
@@ -231,6 +232,8 @@
 
 (use-package marginalia
   :ensure t
+  :custom
+  (marginalia-align 'left)
   :init
   (marginalia-mode))
 
@@ -253,17 +256,18 @@
 (use-package org
   :ensure t
   :defer
+  :hook
+  (org-mode . howm-mode)
+  (org-mode . org-modern-mode)
   :config
-  (add-hook 'org-mode-hook 'howm-mode)
-  (add-hook 'org-mode-hook 'org-modern-mode)
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
 (use-package org-modern
   :ensure t
   :after org
   :defer t
+  :hook (org-agenda-finalize . org-modern-agenda)
   :config
-  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
   (with-eval-after-load 'org (global-org-modern-mode)))
 
 (use-package howm
@@ -289,19 +293,14 @@
   (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
   (add-to-list 'auto-mode-alist '("Gemfile\\'" . ruby-mode)))
 
+(use-package ruby-end
+  :ensure t)
+
 (use-package rbenv
   :ensure t
-  :defer t
   :config
   (setq rbenv-installation-dir "~/.rbenv")
   (global-rbenv-mode))
-
-(use-package robe
-  :ensure t
-  :defer t
-  :config
-  (add-hook 'ruby-mode-hook 'robe-mode)
-  (add-hook 'ruby-ts-mode-hook 'robe-mode))
 
 (use-package eglot
   :ensure t
@@ -362,10 +361,11 @@
   :ensure t
   :custom
   (vertico-count 20)
+  (vertico-resize t)
   (vertico-cycle t)
   :init
-  (vertico-mode))
-(vertico-multiform-mode)
+  (vertico-mode)
+  (vertico-multiform-mode))
 
 (use-package savehist
   :init
@@ -417,8 +417,7 @@
   :ensure t
   :after (embark consult)
   :demand t
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package delsel
   :config
