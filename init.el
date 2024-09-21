@@ -106,7 +106,7 @@
 (use-package corfu
   :ensure t
   :custom ((corfu-auto t)
-           (corfu-auto-prefix 1)
+           (corfu-auto-prefix +1)
            (corfu-auto-delay 0)
            (corfu-cycle t))
   :init
