@@ -302,12 +302,11 @@
 
 (use-package eglot
   :ensure t
-  :hook ((rust-mode ruby-mode go-mode c-mode c++-mode) . eglot-ensure))
+  :hook ((rust-mode go-mode c-mode c++-mode) . eglot-ensure))
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '((c-mode) "clangd"))
   (add-to-list 'eglot-server-programs '((c++-mode) "clangd"))
   (add-to-list 'eglot-server-programs '((go-mode) "gopls"))
-  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
   (add-to-list 'eglot-server-programs
              '((rust-mode rust-ts-mode) .
                ("rust-analyzer" :initializationOptions (:check (:command "clippy"))))))
