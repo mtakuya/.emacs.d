@@ -422,6 +422,11 @@
   :config
   (delete-selection-mode +1))
 
+(use-package avy
+  :ensure t
+  :config
+  (global-set-key (kbd "C-M-a") 'avy-goto-char))
+
 ;; -------------------------------------------------------------
 
 (defun my/recompile-elpa ()
