@@ -17,40 +17,47 @@
 	("nongnu" . "https://elpa.nongnu.org/nongnu/")
         ("org" . "https://orgmode.org/elpa/")))
 
-(setq make-backup-files nil)
-(setq create-lockfiles nil)
-(setq ring-bell-function 'ignore)
-(setq confirm-kill-emacs 'y-or-n-p)
-(setq enable-recursive-minibuffers t)
-(setq max-lisp-eval-depth 10000)
-;; Symbolic link setting
-(setq find-file-visit-truename t)
-(setq vc-handled-backends '(Git))
-(setq sentence-end-double-space nil)
-(setq require-final-newline t)
-(setq show-trailing-whitespace t)
-(setq history-length 1000)
-(setq history-delete-duplicates t)
-(setq tab-always-indent t)
+(use-package emacs
+  :config
+  (setq make-backup-files nil)
+  (setq create-lockfiles nil)
+  (setq ring-bell-function 'ignore)
+  (setq confirm-kill-emacs 'y-or-n-p)
+  (setq enable-recursive-minibuffers t)
+  (setq max-lisp-eval-depth 10000)
+  ;; Symbolic link setting
+  (setq find-file-visit-truename t)
+  (setq vc-handled-backends '(Git))
+  (setq sentence-end-double-space nil)
+  (setq require-final-newline t)
+  (setq show-trailing-whitespace t)
+  (setq history-length 1000)
+  (setq history-delete-duplicates t)
+  (setq tab-always-indent t)
 
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-(menu-bar-mode 0)
-(windmove-default-keybindings)
-(save-place-mode +1)
-(electric-pair-mode +1)
-(show-paren-mode t)
-;; Move between windows using the Shift key and arrow keys.
-(windmove-default-keybindings)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (menu-bar-mode 0)
+  (windmove-default-keybindings)
+  (save-place-mode +1)
+  (electric-pair-mode +1)
+  (show-paren-mode t)
+  ;; Move between windows using the Shift key and arrow keys.
+  (windmove-default-keybindings)
 
-(define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
+  (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
+  (define-key global-map (kbd "C-x C-j") 'execute-extended-command)
+  (define-key global-map (kbd "C-x j") 'execute-extended-command)
 
-(define-key global-map (kbd "C-x C-j") 'execute-extended-command)
-(define-key global-map (kbd "C-x j") 'execute-extended-command)
+  (set-face-background 'mode-line "gray10")
+  (set-face-foreground 'mode-line "gray95")
+  ;; gauche
+  (custom-set-variables '(scheme-program-name "/usr/local/bin/gosh -i"))
+  (setq scheme-program-name "gosh -i")
+  (modify-coding-system-alist 'process "gosh" '(utf-8 . utf-8))
+  (autoload 'scheme-mode "cmuscheme" "Major mode for scheme." t)
+  (autoload 'run-scheme "cmuscheme" "Run a n inferior Scheme process." t)
 
-(set-face-background 'mode-line "gray10")
-(set-face-foreground 'mode-line "gray95")
-
-(global-auto-revert-mode +1)
+  (global-auto-revert-mode +1))
 
 (use-package tree-sitter
   :ensure t)
