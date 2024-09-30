@@ -182,25 +182,6 @@
   :ensure t
   :defer t)
 
-(use-package treemacs
-  :ensure t
-  :defer t
-  :bind ("C-o" . treemacs)
-  :config
-  (setq treemacs-file-event-delay 2000)
-  (setq treemacs-file-follow-delay 0.2)
-  (treemacs-filewatch-mode t)
-  (treemacs-hide-gitignored-files-mode t)
-  (add-hook 'treemacs-mode-hook (lambda () (which-function-mode -1))))
-
-(use-package treemacs-projectile
-  :after (treemacs projectile)
-  :ensure t)
-
-(use-package treemacs-magit
-  :after (treemacs magit)
-  :ensure t)
-
 (use-package magit
   :ensure t
   :config
