@@ -20,4 +20,4 @@ rbenv global 3.3.5
 ruby -v
 
 gem update
-gem install ruby-lsp
+gem install ruby-lsp solargraph
